@@ -1,0 +1,74 @@
+---
+title: "McInerneyetal_HearingAssessment"
+author: "Phoebe McInerney"
+date: "2023-07-13"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r Packages}
+
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+library(readr)
+library(gridExtra)
+library(rstudioapi)
+library(devtools)
+
+devtools::install_github("https://github.com/luisDVA/annotater", type = "source")
+
+```
+
+
+```{r Import Data}
+
+#Set working directory
+  setwd(dirname(getActiveDocumentContext()$path))
+
+  HearingData <- read.csv("../Data/HearingData_ImportR.csv")
+
+```
+
+
+```{r Plot the data}
+
+ggplot(data=HearingData, aes(x=Taxa, y=MHF, fill=Taxonomy), xlab("Species"))+
+    scale_fill_manual(values=c("Dromornithidae" = "#e0a43d", 
+                              "Anhimidae" = "#405fa3",
+                              "Anseranatidae" = "#232d66",
+                              "Anatidae" = "#86a0d3",
+                              "Megapodiidae" = "#425c4d", 
+                              "Odontophoridae" = "#9ab3a3", 
+                              "Phasianidae" = "#8adba3", 
+                              "Sylviornithidae" = "darkgreen",
+                              "Palaeognathae" = "#7B241C", 
+                              "Phorusrhacidae" = "#CB4335",
+                              "Neoaves" = "#CA6F1E"),
+                      breaks = c("Dromornithidae", "Anhimidae", "Anseranatidae", "Anatidae", "Megapodiidae", "Odontophoridae", "Phasianidae", "Sylviornithidae",
+                              "Palaeognathae", "Phorusrhacidae", "Neoaves"))+
+  geom_col(mapping = NULL,
+    data = HearingData,
+    position = "stack",
+    just = 0.5,
+    na.rm = FALSE,
+    show.legend = TRUE,
+    inherit.aes = TRUE)+
+  labs(title = "Mean Hearing Frequency and Range")+
+  ylab("Hearing (Hz)")+
+  theme(axis.text.x = element_text(angle = 90, face = "italic", vjust = 0.3), 
+        plot.title = element_text(hjust = 0.5))+
+  guides(title = "Taxonomy", levels(HearingData$Taxonomy))+
+  geom_errorbar(aes(ymin=Min.HF, ymax=Max.HF, width=0.2))+
+  scale_x_discrete(name = HearingData$Taxa,
+                   limits=c("Genyornis newtoni", "Ilbandornis woodburnei", "Dromornis stirtoni", "Dromornis planei",
+                            "Anhima cornuta", "Anseranas semipalmata", "Anser caerulescens", "Aythya australis",
+                            "Alectura lathami", "Calipepla californica", "Lagopus lagopus", "Pavo muticus", 
+                            "Sylviornis neocalledoniae", "Dromaius novaeholandiae", "Casuarius casuarius", "Llallawavis scagliai", 
+                            "Patagornis marshi", "Tyto alba", "Melopsittacus undulatus", "Spheniscus demersus", "Taeniopygia guttata"))+
+  scale_y_continuous(breaks = c(1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000))
+
+```
+
+

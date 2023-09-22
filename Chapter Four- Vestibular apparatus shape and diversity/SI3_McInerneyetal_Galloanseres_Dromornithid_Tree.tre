@@ -1,0 +1,12 @@
+#NEXUS
+
+[ID: None Available]
+begin trees;
+   [Note: This tree contains information on the topology, 
+          branch lengths (if present), and the probability
+          of the partition indicated by the branch.]
+	tree con_50_majrule = 
+	
+((Rhea_americana:1.0,((Crypturellus_obsoletus:1.0,Rhynchotus_rufescens:1.0):1.0,(Casuarius_casuarius:1.0,Dromaius_novaehollandiae:1.0):1.0):1.0):1.0,((Sylviornis_neocaledoniae:1.0,((Megapodius_reinwardt:1.0,(Talegalla_fuscirostris:1.0,(Leipoa_ocellata:1.0,Alectura_lathami:1.0):1.0):1.0):1.0,((Mitu_mitu:1.0,Ortalis_vetula:1.0):1.0,(Acryllium_vulturinum:1.0,(Callipepla_californica:1.0,((Pavo_muticus:1.0,(Gallus_gallus:1.0,Coturnix_japonica:1.0):1.0):1.0,(Perdix_perdix:1.0,Lagopus_lagopus:1.0):1.0):1.0):1.0):1.0):1.0):1.0):1.0,(((Anhima_cornuta:1.0,Chauna_chavaria:1.0):1.0,(Barawertornis_tedfordi:1.0,((Genyornis_newtoni:1.0,Ilbandornis_woodburnei:1.0):1.0,(Dromornis_planei:1.0,Dromornis_stirtoni:1.0):1.0):1.0):1.0):1.0,(Anseranas_semipalmata:1.0,(Dendrocygna_bicolor:1.0,(Mionetta_blanchardi:1.0,((Bizura_lobata:1.0,Oxyura_australis:1.0):1.0,((Malachorynchus_membranaceus:1.0,(Stictonetta_naevosa:1.0,(Cereopsis_novaehollandiae:1.0,(Cygnus_atratus:1.0,(Branta_canadensis:1.0,Anser_caerulescens:1.0):1.0):1.0):1.0):1.0):1.0,(Tadorna_tadornoides:1.0,((Chenonetta_jubata:1.0,Chenonetta_finschi:1.0):1.0,((Nettapus_pulchellus:1.0,Anas_supercilliosa:1.0):1.0,(Aythya_australis:1.0,(Melanitta_perspicillata:1.0,Lophodytes_cucullatus:1.0):1.0):1.0):1.0):1.0):1.0):1.0):1.0):1.0):1.0):1.0):1.0):1.0):1.0;
+
+end;

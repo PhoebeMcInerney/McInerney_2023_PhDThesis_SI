@@ -1,0 +1,72 @@
+####Phylogenetic signal in shape####
+#[PHYSIGNAL()]
+#DROMORNITHIDS SISTER TO ANHIMIDS (as per McInerney et al. 2023)#
+
+	#Call: physignal.shape.Anhimid <- physignal(Superposed.Lms$coords, phy = Tree, iter = 10000)
+	
+	#Summary: Phylogenetic signal
+	
+		Observed Phylogenetic Signal (K): 0.48231
+		P-value: 3e-04
+		Based on 10001 random permutations
+	
+	#Summary: PACA
+	
+		Ordination type: Alignment to an alternative matrix 
+		Alignment matrix: C 
+		Centering by OLS mean
+		OLS residuals
+		Alignment to  C means residual projection is not orthogonal.
+		Number of observations: 45 
+		Number of vectors 45 
+
+		Importance of Components:
+									  Comp1       Comp2        Comp3        Comp4        Comp5        Comp6        Comp7        Comp8
+		Singular Value           0.01697170 0.004273571 0.0002465256 0.0001037544 5.598369e-05 1.575716e-05 9.358070e-06 5.470927e-06
+		Proportion of Covariance 0.78216340 0.196953263 0.0113614648 0.0047816588 2.580083e-03 7.261900e-04 4.312792e-04 2.521350e-04
+		Cumulative Proportion    0.78216340 0.979116662 0.9904781270 0.9952597858 9.978399e-01 9.985661e-01 9.989973e-01 9.992495e-01
+		RV by Component          0.08878001 0.022355319 0.0012895911 0.0005427456 2.928542e-04 8.242670e-05 4.895265e-05 2.861876e-05
+		Cumulative RV            0.08878001 0.111135329 0.1124249197 0.1129676653 1.132605e-01 1.133429e-01 1.133919e-01 1.134205e-01
+										Comp9       Comp10       Comp11       Comp12       Comp13       Comp14       Comp15       Comp16
+		Singular Value           3.374201e-06 3.066744e-06 2.384485e-06 1.403843e-06 1.110850e-06 9.945247e-07 6.448244e-07 5.716954e-07
+		Proportion of Covariance 1.555046e-04 1.413350e-04 1.098922e-04 6.469799e-05 5.119502e-05 4.583401e-05 2.971760e-05 2.634735e-05
+		Cumulative Proportion    9.994050e-01 9.995463e-01 9.996562e-01 9.997209e-01 9.997721e-01 9.998179e-01 9.998476e-01 9.998740e-01
+		RV by Component          1.765066e-05 1.604233e-05 1.247339e-05 7.343591e-06 5.810927e-06 5.202421e-06 3.373117e-06 2.990575e-06
+		Cumulative RV            1.134382e-01 1.134542e-01 1.134667e-01 1.134740e-01 1.134798e-01 1.134850e-01 1.134884e-01 1.134914e-01
+									   Comp17       Comp18       Comp19       Comp20       Comp21       Comp22       Comp23       Comp24
+		Singular Value           5.257759e-07 3.134620e-07 2.879078e-07 2.407064e-07 1.801202e-07 1.756501e-07 1.445289e-07 1.258822e-07
+		Proportion of Covariance 2.423109e-05 1.444632e-05 1.326862e-05 1.109328e-05 8.301082e-06 8.095072e-06 6.660808e-06 5.801448e-06
+		Cumulative Proportion    9.998982e-01 9.999127e-01 9.999259e-01 9.999370e-01 9.999453e-01 9.999534e-01 9.999601e-01 9.999659e-01
+		RV by Component          2.750367e-06 1.639739e-06 1.506064e-06 1.259150e-06 9.422202e-07 9.188369e-07 7.560397e-07 6.584975e-07
+		Cumulative RV            1.134942e-01 1.134958e-01 1.134973e-01 1.134986e-01 1.134995e-01 1.135004e-01 1.135012e-01 1.135018e-01
+									   Comp25       Comp26       Comp27       Comp28       Comp29       Comp30       Comp31       Comp32
+		Singular Value           1.106664e-07 9.732614e-08 7.473806e-08 6.907832e-08 6.386803e-08 5.409274e-08 4.290591e-08 4.141386e-08
+		Proportion of Covariance 5.100209e-06 4.485406e-06 3.444404e-06 3.183567e-06 2.943444e-06 2.492937e-06 1.977376e-06 1.908613e-06
+		Cumulative Proportion    9.999710e-01 9.999755e-01 9.999789e-01 9.999821e-01 9.999851e-01 9.999875e-01 9.999895e-01 9.999914e-01
+		RV by Component          5.789028e-07 5.091191e-07 3.909595e-07 3.613530e-07 3.340977e-07 2.829625e-07 2.244435e-07 2.166385e-07
+		Cumulative RV            1.135024e-01 1.135029e-01 1.135033e-01 1.135037e-01 1.135040e-01 1.135043e-01 1.135045e-01 1.135047e-01
+									   Comp33       Comp34       Comp35       Comp36       Comp37       Comp38       Comp39       Comp40
+		Singular Value           3.379700e-08 2.929754e-08 2.629739e-08 2.121280e-08 1.586989e-08 1.291104e-08 1.002886e-08 9.027198e-09
+		Proportion of Covariance 1.557580e-06 1.350216e-06 1.211950e-06 9.776203e-07 7.313852e-07 5.950225e-07 4.621934e-07 4.160305e-07
+		Cumulative Proportion    9.999930e-01 9.999943e-01 9.999956e-01 9.999965e-01 9.999973e-01 9.999979e-01 9.999983e-01 9.999987e-01
+		RV by Component          1.767942e-07 1.532573e-07 1.375633e-07 1.109655e-07 8.301639e-08 6.753844e-08 5.246159e-08 4.722184e-08
+		Cumulative RV            1.135049e-01 1.135051e-01 1.135052e-01 1.135053e-01 1.135054e-01 1.135055e-01 1.135055e-01 1.135056e-01
+									   Comp41       Comp42       Comp43       Comp44       Comp45
+		Singular Value           8.965663e-09 6.681432e-09 6.368580e-09 5.481210e-09 3.185714e-34
+		Proportion of Covariance 4.131946e-07 3.079228e-07 2.935046e-07 2.526089e-07 1.468179e-32
+		Cumulative Proportion    9.999991e-01 9.999995e-01 9.999997e-01 1.000000e+00 1.000000e+00
+		RV by Component          4.689995e-08 3.495099e-08 3.331444e-08 2.867256e-08 1.666467e-33
+		Cumulative RV            1.135056e-01 1.135056e-01 1.135057e-01 1.135057e-01 1.135057e-01
+		
+	
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+####Phylogenetic signal in size####
+#[PHYSIGNAL()]
+#DROMORNITHIDS SISTER TO ANHIMIDS (as per McInerney et al. 2023)
+
+	Call:
+	physignal(Superposed.Lms$Csize, phy = Tree, iter = 999) 
+
+		Observed Phylogenetic Signal (K): 1.1057
+
+		P-value: 0.001

@@ -1,0 +1,118 @@
+#NEXUS
+
+begin data;
+	dimensions ntax=35 nchar=76;
+	format datatype=standard gap=- missing=?;
+	matrix
+[revised 26 Jun 2023]
+	
+	Dromaius_novaehollandiae     1001320300030000020000103030201020000000203322011001{01}03000100000111011000010
+	Casuarius_casuarius          002132030003000002000010303??01020000000203012021001{01}030000000001?2011000010
+	Anhima_cornuta               1121211133101110222101012101121032003111031030022010010110322220212112100201
+	Anseranas_semipalmata        1120112144{01}01111131010112202{01}22030113201013310011123111111323220311222000101
+	Dendrocygna_bicolor          11001122450?2121131020112212110230313211022000001123311212323320410322200101
+	Oxyura_australis             0100002245002121132210111212120030312111022102001123111212323220411222200101
+	Cereopsis_novaehollandiae    0100012245101120122010011112220040412211011202001023010112323320410122200101
+	Cygnus_atratus               1100012245002110131020112212121040213111023301011123211212323220410212200101
+	Anser_caerulescens           1100112245101101032020112212120040313111022310010123011212323320411222200101
+	Tadorna_tadornoides          0100012245111111121220112212110030{12}12211022202000123211212333220411212200101
+	Chenonetta_jubata            01000?224501001010121121121212003031221102121200112321121233{23}320410112200101
+	Anas_supercilliosa           1100012245011111122220211212120030{23}12111023302000123211212333220410212200101
+	Aythya_australis             0100112245002121221220112212120030{23}12211012202001123?11212333320410212200101
+	Melanitta_perspicillata      0110012245001120031210112212110030312101023211011123211112343220410212200101
+	Leipoa_ocellata              0101001012000000000001011100021211002311103030022012300211321231002000001000
+	Alectura_lathami             0101111012000000110001211100021111002411103230022012100110321231002000001000
+	Acryllium_vulturinum         1101001041020000110201210200110111001421203020022012000110321330002000001000
+	Callipepla_californica       0101001021120000000201210101110112003401102220022012000110322231002000001000
+	Pavo_muticus                 0101011021020000110201211100010111001321202031012012100110322231002000001000
+	Gallus_gallus                0101011021120000000201210100110312001421202030022012300110322331002000001000
+	Coturnix_japonica            0101001021120000000201210100010111001411202031022012400110312231002000001000
+	Perdix_perdix                01010?1021120000000001210200011111001311203021022012400110322331002000001000
+	Lagopus_lagopus              0101001021020000000001210101110311001411001032022012400110322331002100001000
+	Asteriornis_maastrichtensis  ?101??{12}???????????????????0??2121000332110321001101???1?113?????{0123}0110?001???
+	Genyornis_newtoni            22122?11342332002221000122222011{01}3003101011012011010012?11212210210322100201
+	Ilbandornis_lawsoni          ?2?2211?34?3?????????????????011130???010110????101021211121????2?????????0?
+	Ilbandornis_woodburnei       ?2??21113423210022210001?????011130???010110????101021211121????2?????????0?
+	Dromornis_murrayi            32?3111???2321002321000???2?????????????????10011010012111??211???????????0?
+	Dromornis_planei             320320113423210023210001222220120300310101??1001101001211?212110210322100?01
+	Dromornis_stirtoni           32032111342321??2321??????22201213003101011010011010012111?12110211322100?0?
+	Gastornis_giganteus          22020010210?320020100?011110011?03012211103330120010000110322211?1232?011100
+	Sylviornis_neocaledoniae     12111010121200001211010120100111120022010033301?201000011030{12}231?12000011001
+	Nettapterornis_oxfordi       0100??1245??1121?21200?1220????????????????????????????1102122103103?210?10?
+	Conflicto_antarcticus        1100??12450?111102020011110??20?202111112022??010023?1?11032{23}11031?11?10010?
+	Presbyornis_pervetus         1100002245??111102??0001?0012210{03}041231100331?010123?1?????2321041022220?101
+
+;
+
+END;
+	
+begin mrbayes;
+	log start file=Anseriformes_morph_76_35.log replace;
+	set autoclose=yes nowarn=yes;
+
+		charset morph = 1-76;
+		partition 1part = 1:morph ;
+		set partition=1part;
+		lset applyto=(1) coding=variable rates=gamma; [Markov k model (Lewis, 2001)]
+		unlink statefreq=(all) revmat=(all) shape=(all) pinvar=(all) Brlens=(all);
+			[ordering]
+		ctype ordered: 1 4 7 12 13 14 15 18 25 28 29 30 38 39 41 44 49 58 60 62 65 68 69 71 74 ;
+			[exclude taxa-none]
+			[clade groupings]
+		taxset Clade0 = Casuarius_casuarius Dromaius_novaehollandiae Leipoa_ocellata Alectura_lathami Acryllium_vulturinum Callipepla_californica Pavo_muticus Gallus_gallus Coturnix_japonica Perdix_perdix Lagopus_lagopus Anhima_cornuta Anseranas_semipalmata Dendrocygna_bicolor Oxyura_australis Cereopsis_novaehollandiae Cygnus_atratus Anser_caerulescens Tadorna_tadornoides Chenonetta_jubata Anas_supercilliosa Aythya_australis Melanitta_perspicillata ;
+		taxset CladePalaeognathae = Casuarius_casuarius Dromaius_novaehollandiae ;
+		taxset CladeGalloanseres = Leipoa_ocellata Alectura_lathami Acryllium_vulturinum Callipepla_californica Pavo_muticus Gallus_gallus Coturnix_japonica Perdix_perdix Lagopus_lagopus Anhima_cornuta Anseranas_semipalmata Dendrocygna_bicolor Oxyura_australis Cereopsis_novaehollandiae Cygnus_atratus Anser_caerulescens Tadorna_tadornoides Chenonetta_jubata Anas_supercilliosa Aythya_australis Melanitta_perspicillata ;
+		taxset CladeGalliformes = Leipoa_ocellata Alectura_lathami Acryllium_vulturinum Callipepla_californica Pavo_muticus Gallus_gallus Coturnix_japonica Perdix_perdix Lagopus_lagopus ;
+		taxset CladeMegapodiidae = Leipoa_ocellata Alectura_lathami ;
+		taxset CladePhasianoidea = Acryllium_vulturinum Callipepla_californica Pavo_muticus Gallus_gallus Coturnix_japonica Perdix_perdix Lagopus_lagopus ;
+		taxset CladeG1 = Callipepla_californica Pavo_muticus Gallus_gallus Coturnix_japonica Perdix_perdix Lagopus_lagopus ;
+		taxset CladePhasianidae = Pavo_muticus Gallus_gallus Coturnix_japonica Perdix_perdix Lagopus_lagopus ;
+		taxset CladeG2 = Pavo_muticus Gallus_gallus Coturnix_japonica ;
+		taxset CladeG3 = Gallus_gallus Coturnix_japonica ;
+		taxset CladeG4 = Perdix_perdix Lagopus_lagopus ;
+		taxset CladeAnseriformes = Anhima_cornuta Anseranas_semipalmata Dendrocygna_bicolor Oxyura_australis Cereopsis_novaehollandiae Cygnus_atratus Anser_caerulescens Tadorna_tadornoides Chenonetta_jubata Anas_supercilliosa Aythya_australis Melanitta_perspicillata ;
+		taxset CladeAnatoidea = Anseranas_semipalmata Dendrocygna_bicolor Oxyura_australis Cereopsis_novaehollandiae Cygnus_atratus Anser_caerulescens Tadorna_tadornoides Chenonetta_jubata Anas_supercilliosa Aythya_australis Melanitta_perspicillata ;
+		taxset CladeAnatidae = Dendrocygna_bicolor Oxyura_australis Cereopsis_novaehollandiae Cygnus_atratus Anser_caerulescens Tadorna_tadornoides Chenonetta_jubata Anas_supercilliosa Aythya_australis Melanitta_perspicillata ;
+		taxset CladeA1 = Oxyura_australis Cereopsis_novaehollandiae Cygnus_atratus Anser_caerulescens Tadorna_tadornoides Chenonetta_jubata Anas_supercilliosa Aythya_australis Melanitta_perspicillata ;
+		taxset CladeAnserinae = Cereopsis_novaehollandiae Cygnus_atratus Anser_caerulescens ;
+		taxset CladeA2 = Cygnus_atratus Anser_caerulescens ;
+		taxset CladeAnatinae = Tadorna_tadornoides Chenonetta_jubata Anas_supercilliosa Aythya_australis Melanitta_perspicillata ;
+		taxset CladeA3 = Chenonetta_jubata Anas_supercilliosa Aythya_australis Melanitta_perspicillata ;
+		taxset CladeA4 = Anas_supercilliosa Aythya_australis Melanitta_perspicillata ;
+			[topological constraints]
+		[In accordance with Wang et al., 2013, Burleigh et al., 2015, Prum et al., 2015, and Kimball et al., 2019]
+		constraint root = 1-. ; [Dromaius_novaehollandiae - all other taxa]
+		constraint Palaeognathae = 1-2 ; [Dromaius_novaehollandiae, Casuarius_casuarius]
+		constraint BackBone0 partial = CladePalaeognathae : CladeGalloanseres ;
+		constraint BackBone1 partial = CladeGalliformes : CladeAnseriformes ;
+		constraint BackBone2 partial = CladeMegapodiidae : CladePhasianoidea CladeAnseriformes CladePalaeognathae ;
+		constraint BackBone3 partial = CladeG1 : CladeMegapodiidae Acryllium_vulturinum CladeAnseriformes CladePalaeognathae ;
+		constraint BackBone4 partial = CladePhasianidae : CladeMegapodiidae Acryllium_vulturinum Callipepla_californica CladeAnseriformes CladePalaeognathae ;
+		constraint BackBone5 partial = CladeG2 : CladeG4 CladeMegapodiidae Acryllium_vulturinum Callipepla_californica CladeAnseriformes CladePalaeognathae ;
+		constraint BackBone6 partial = CladeG3 : CladeG4 CladeMegapodiidae Acryllium_vulturinum Callipepla_californica Pavo_muticus CladeAnseriformes CladePalaeognathae ;
+		constraint BackBone7 partial = CladeAnseriformes : CladePalaeognathae CladeGalliformes ;
+		constraint BackBone8 partial = CladeAnatoidea: Anhima_cornuta CladeGalliformes CladePalaeognathae ;
+		constraint BackBone9 partial = CladeAnatidae : Anseranas_semipalmata Anhima_cornuta CladeGalliformes CladePalaeognathae ;
+		constraint BackBone10 partial = CladeA1 : Dendrocygna_bicolor Anseranas_semipalmata Anhima_cornuta CladeGalliformes CladePalaeognathae ;
+		constraint BackBone11 partial = CladeAnserinae : CladeAnatinae Oxyura_australis Dendrocygna_bicolor Anseranas_semipalmata Anhima_cornuta CladeGalliformes CladePalaeognathae ;
+		constraint BackBone12 partial = CladeA2 : Cereopsis_novaehollandiae CladeAnatinae Oxyura_australis Dendrocygna_bicolor Anseranas_semipalmata Anhima_cornuta CladeGalliformes CladePalaeognathae ;
+		constraint BackBone13 partial = CladeAnatinae : CladeAnserinae Oxyura_australis Dendrocygna_bicolor Anseranas_semipalmata Anhima_cornuta CladeGalliformes CladePalaeognathae ;
+		constraint BackBone14 partial = CladeA3 : Tadorna_tadornoides CladeAnserinae Oxyura_australis Dendrocygna_bicolor Anseranas_semipalmata Anhima_cornuta CladeGalliformes CladePalaeognathae ;
+		constraint BackBone15 partial = CladeA4 : Chenonetta_jubata Tadorna_tadornoides CladeAnserinae Oxyura_australis Dendrocygna_bicolor Anseranas_semipalmata Anhima_cornuta CladeGalliformes CladePalaeognathae ;
+		[outgroup/ingroup constraints]
+		prset topologypr=constraints(root, Palaeognathae, BackBone0, BackBone1, BackBone2, BackBone3, BackBone4, BackBone5, BackBone6, BackBone6, BackBone7, BackBone8, BackBone9, BackBone10, BackBone11, BackBone12, BackBone13, BackBone14, BackBone15);
+			[mcmc settings]
+		mcmcp temp=0.1  nruns=4 nchain=4  ;
+		mcmcp filename=Anseriformes_morph_ConTop_MrBayes_76_35_19.06.2023_1  savebrlens=yes;
+			[mcmc run]
+		mcmc ngen=50000000 samplefreq=5000 printfr=5000 ;
+			[summary]
+		sumt filename=Anseriformes_morph_ConTop_MrBayes_76_35_19.06.2023_1 relburnin=yes burninfrac=0.2 contype=allcompat;
+		sump filename=Anseriformes_morph_ConTop_MrBayes_76_35_19.06.2023_1 relburnin=yes burninfrac=0.2 ;
+		log stop;
+
+END;
+
+
+
+

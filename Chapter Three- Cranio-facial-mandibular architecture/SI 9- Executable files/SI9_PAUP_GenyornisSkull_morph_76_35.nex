@@ -1,0 +1,162 @@
+#NEXUS
+
+BEGIN TAXA;
+	TITLE Taxa;
+	DIMENSIONS NTAX=35;
+	TAXLABELS
+		Dromaius_novaehollandiae Casuarius_casuarius Anhima_cornuta Anseranas_semipalmata Dendrocygna_bicolor Oxyura_australis Cereopsis_novaehollandiae Cygnus_atratus Anser_caerulescens Tadorna_tadornoides Chenonetta_jubata Anas_supercilliosa Aythya_australis Melanitta_perspicillata Leipoa_ocellata Alectura_lathami Acryllium_vulturinum Callipepla_californica Pavo_muticus Gallus_gallus Coturnix_japonica Perdix_perdix Lagopus_lagopus Asteriornis_maastrichtensis Genyornis_newtoni Ilbandornis_lawsoni Ilbandornis_woodburnei Dromornis_murrayi Dromornis_planei Dromornis_stirtoni Gastornis_giganteus Sylviornis_neocaledoniae Nettapterornis_oxfordi Conflicto_antarcticus Presbyornis_pervetus 
+	;
+
+END;
+
+
+BEGIN CHARACTERS;
+	TITLE  Character_Matrix;
+	DIMENSIONS  NCHAR=76;
+	FORMAT DATATYPE = STANDARD GAP = - MISSING = ? SYMBOLS = "  0 1 2 3 4 5";
+	CHARSTATELABELS 
+		1 'Skull, proportions of skull, rostrocaudal length of the rostrum relative to the rostrocaudal length of the cranium' /  Rostrum_shorter_than_the_cranium Rostrum_near_equal_to_or_up_to_1.5_times_rostrocaudal_length_of_cranium From_1.5_to_2_times_rostrocaudal_length_of_cranium Greater_than_2_times_rostrocaudal_length,
+		2 'Skull, craniorostral hinge, formation, and hinge type' /  'Flexion zone absent or indistinct, no transverse sulcus, limited flexion' 'Well-developed flexion zone present and distinct' 'A synovial joint, essentially a hinge',
+		3 'Skull, presence of an osseous casque or other elaborate osseous structure' /  Absent Present_on_rostrum Present_on_cranium,
+		4 'Cranium, os frontales, rostral truncation, location of the hinge in relation to the orbits' /  'Os frontales elongated, hinge far rostral of the orbits' 'Os frontales, hinge intersects the most rostral point of the orbits' 'Os frontales rostrally truncated, hinge transects the dorsal-most point of the orbits' 'Os frontales rostrally truncated, hinge transects the orbits in near rostro-caudal alignment with, or caudally of, the processus postorbitalis',
+		5 'Cranium, caudal orbit, area muscularis aspera, attachment of the m. pseudotemporalis and presence of fossa pseudotemporalis' /  Not_distinct_area_muscularis_aspera_near_flat 'Distinct, a shallow depression marked dorsally by a ridge' 'Distinct, fossa pseudotemporalis present as a deep fossa within a larger depression' 'Impression not on area muscularis aspera, present on lateral cranium',
+		6 'Cranium, caudal orbit, area muscularis aspera, tuberculum for origin of m. pseudotemporalis (superficialis)' /  Absent Present_and_projected Low_osseous_crest,
+		7 'Cranium, postorbital temporal region, processus postorbitalis orientation' /  Processus_postorbitalis_projects_almost_directly_ventrally_when_present Processus_postorbitalis_directed_rostroventrally Projected_strongly_rostrally,
+		8 'Cranium, temporal region, position of the crista AME superficialis relative to the crista zygomatica and surrounding structures' /  Crista_AME_superficialis_is_absent_from_the_cranium 'Crests are confluent or near confluent rostrally along the ventral processus postorbitalis and/or AZO' 'Crests are parallel and slightly dorsoventrally separated on the processus postorbitalis and/or AZO' 'Attachment of the m. AME superficialis is relatively rostral on the processus postorbitalis and so any crista AME superficialis, if present, would also be far rostral of the crista zygomatica',
+		9 'Cranium, temporal region, aponeurosis zygomatica ossificans' /  'Variably ossified, extends along the prominent processus zygomaticus' 'Ossified, extends lateroventrally from os squamosum ' 'Ossified, intersects the processus postorbitalis rostrally, forming a secondary temporal fenestra ' 'Ossified with a linear attachment alongside the lamina lateralis cranii to contribute medially to, and extending rostrally past, the process postorbitalis ' Absent_or_minor_ossification_linearly_along_lamina_lateralis_cranii_and_ventrally_along_processus_postorbitalis_,
+		10 'Cranium, processus postorbitalis and/or aponeurosis zygomatica ossificans, location of the excavated impression for the m. AME profundus pars coronoideus' /  'M. AME profundus, pars coronoideus does not originate as a belly distinct from m. AME profundus, the latter of which originates on the lateral cranium' 'Located laterally on the cranium, between the processus postorbitalis and processus zygomatica/AZO, may expand ventrolaterally onto the medial aspect of the ossified aponeurosis if present ' 'Same as state 1, except confined more medioventrally on the cranium, lacking the significant dorsocaudal expansion onto the lateral side of the cranium' 'Positioned ventrally on the AZO, origin is located ventromedially and is mediolaterally narrow' 'Same as state 3, except medially expanded to cover the ventromedial aspect of the ossified zygomatic aponeurosis' Positioned_medially_but_slightly_visible_laterally_on_the_ventral_surface_of_cranium_associated_with_processus_postorbitalis,
+		11 'Cranium, otic region, cavum tympanicum, annulus tympanicus bridges the ala parasphenoidalis and processus suprameaticus to form a complete ring, enclosing the cavum tympanicum ventrorostrally' /  'Absent, no tympanic enclosure' 'Partial to or complete tympanic enclosure, thin and fragile' 'Complete closure, robust and obvious',
+		12 'Cranium, otic region, separation of the cotyla quadratica otici and cotyla quadratica squamosi by the recessus tympanicus dorsalis' /  Cotyla_widely_separated_by_a_recessus_which_is_wide_for_its_entire_length 'Cotyla are closely approximated medially, width of recessus increasing laterocaudally' 'Cotyla closely approximated for entire border, separated only by rostrocaudally thin recessus tympanicus dorsalis' 'Cotyla form a single articular surface (cotylae quadratica-squamosi-otica), recessus tympanicus dorsalis truncated dorsocaudally',
+		13 'Cranium, os exoccipitale, processus paroccipitalis, length of ventral extension from the cranium and placement relative to the os parasphenoidale, lamina basisphenoidalis' /  'Near absent or short, processus paroccipitalis terminates dorsad of, or in lateral alignment with, the lamina basisphenoidalis' 'Short, terminates just ventral of the lamina parasphenoidalis' 'Minor elongation, terminates further ventrally past the prominentia exoccipitales' 'Elongate, extends considerably further ventrally past the prominentia exoccipitales',
+		14 'Cranium, os exoccipitale, processus paroccipitalis, position of the connection of the ala parasphenoidalis to the processus paroccipitalis' /  'Connects to the ventral-most processus paroccipitalis which is dorsal of the ala parasphenoidalis' 'Widely triangular process, lateral wing of the ala parasphenoidalis fused to ventral apex which is laterocaudal of the ala parasphenoidalis' 'Connection of the ala parasphenoidalis to the processus paroccipitalis is dorsal of the ventral-most point on the process',
+		15 'Cranium, caudal cranium, crista nuchalis transversa' /  Visible_yet_relatively_flat Partially_distinct_ridge_enhanced_by_paired_depressions_in_dorsal_area_on_caudal_margin Distinct_ridge_or_flange_for_its_complete_dorsoventral_length_due_to_expanded_and_ventrally_undercutting_depressions_along_caudal_margins,
+		16 'Cranium, os supraoccipitale, fonticuli occipitalis, presence in adult state' /  Absent Present,
+		17 'Cranium, occipital region, prominentia exoccipitalis' /  Absent_or_indistinct 'Present, lowly raised caudal prominences' 'Present, well-developed caudal prominences with distinct bulbous appearance',
+		18 'Cranium, occipital region, area encompassing the occipital region, ventral of  the crista ventralis, flat or concave' /  Flat_or_convex Slightly_depressed Concave 'Concave, notably increased with the extreme caudolateral flaring of the exoccipital prominences',
+		19 'Cranium, occipital region, lamina parasphenoidalis, caudal region, tuberculum basilare' /  'Low, ridge-like tubercles, undifferentiated from the crista basilaris lateralis and/or transversa' 'Prominent, raised tubercles joined by crests aligned with the crista basilaris lateralis and transversa, often right-angled in shape' 'Prominent, raised, rounded tubercle in lateral area',
+		20 'Cranium, occipital region, foramen magnum, shape in caudal view' /  'Rounded, oval or near circular' 'Rectangular, both dorsal and ventral margins near horizontal' 'Triangular, dorsal margin angled distinctly dorsally',
+		21 'Cranium, os parasphenoidale, lamina parasphenoidalis, bulla basitemporalis ' /  Absent 'Present, not well developed' 'Present, well-developed',
+		22 'Cranium, os parasphenoidale, lamina parasphenoidalis, flat or bulbous' /  Flat Rounded_or_inflated,
+		23 'Cranium, os parasphenoidale, ala parasphenoidalis, shape in lateral view' /  Straight_lateral_margin_directed_rostrally_or_rostroventrally_from_processus_paroccipitalis 'Curved lateral margin, proceeds rostrally on the horizontal (dorsoventral) plane, potentially directed rostrodorsally initially' 'Ventrally curved, rounded flange',
+		24 'Cranium, rostrum parasphenoidalis, processus basipterygoideus facet, large and ovoid' /  Absent Present,
+		25 'Cranium, rostrum parasphenoidalis, processus basipterygoideus, pedicellate (stalked)' /  Facet_is_sessile_and_confluent_with_the_rostrum_parasphenoidalis 'Facet is sessile and confluent with the rostrum parasphenoidalis, but edges well defined ' 'Sessile but slightly pedestalled ventrolaterally, short' 'Pedestalled, elongate',
+		26 'Cranium, rostrum parasphenoidalis, position of processus basipterygoideus' /  'Rostrolaterally adjacent to lamina parasphenoidalis, caudal to rostrum parasphenoidale' 'Just rostral of, and distinctly separated from the lamina parasphenoidalis on caudal end of rostrum parasphenoidale ' 'Located far rostrally from the lamina parasphenoidalis, and rostral on rostrum parasphenoidalis',
+		27 'Os lacrimale, synostosis with os frontale or os nasale' /  lacking 'Synostosed to os frontale, caudal of craniorostral hinge' 'Synostosed to os nasale, rostral of craniorostral hinge' 'Synostosed to both os nasale and os frontale, extends across the craniorostral hinge',
+		28 'Os lacrimale, dorsoventral processus orbitalis and rostrocaudal processus supraorbitalis, relative length, lateral view' /  Processus_orbitalis_shorter_than_processus_supraorbitalis Near_equal_or_processus_orbitalis_slightly_more_elongate Processus_orbitalis_far_exceeds_the_relative_length_of_the_processus_supraoribitalis,
+		29 'Os lacrimale, dorsoventral length of the processus orbitalis relative to the dorsoventral height of the rostrum' /  'Short, especially reduced in length, does not approach the dorsoventral midline of the rostrum' 'Intermediate in length, approaches the dorsoventral midline of the rostrum' 'Long, extends approaches the dorsoventral height of the rostrum, approaches or overlaps the jugal bar',
+		30 'Quadrate, pars otica, capitulum oticum and capitulum squamosum, separation of the capitulum by vallecula intercapitularis' /  'Absent, the two capitulae are fused to form a single articular head, the capitulum squamoso-otica, vallecular intercapitularis is near or completely indistinct' 'Narrow vallecular intercapitularis, cotylae closely approximated' 'Wide vallecula intercapitularis, significant space between cotylae',
+		31 'Quadrate, pars otica, capitulum squamosum, overhangs lateral surface of the pars otica' /  Absent 'Present, slight overhang' 'Present, major overhang, large lateroventral extension of the articular surface onto the lateral surface',
+		32 'Quadrate, pars otica, sulcus pneumaticus, region dorsal of the otic foramen pneumaticum' /  'Indeterminate, the sulcus pneumaticus is confluent with the depressio caudomedialis on caudal side of the crista medialis' The_sulcus_pneumaticus_is_on_the_rostral_side_of_the_crista_medialis_but_indistinct Same_as_1_but_sulcus_pneumaticum_is_present_dorsorostral_of_the_foramen 'Same as 2 but sulcus is more elongate, and extends dorsally and ventrally',
+		33 'Quadrate, pars otica, foramen pneumaticum caudomediale or rostromediale' /  Both_absent Foramen_pneumaticum_rostromediale_present Both_present Foramen_pneumaticum_caudomediale_present Foramen_pneumaticum_caudomediale_present_bur_rostrally_displaced,
+		34 'Quadrate, pars otica, tuberculum subcapitulare associated with the m. AME superficialis (aponeurosis articularis), development and shape' /  Absent 'Crested, follows the long axis of the pars otica' 'Well-developed conical shaped, tubercle' 'Extremely well developed, dorsoventrally extensive',
+		35 'Quadrate, pars otica, tuberculum subcapitulare associated with the m. AM posterior, development and shape' /  Absent 'Flat, scarred attachment ' 'Low, rostrocaudally aligned ridge' 'Crested, rostrocaudally aligned ridge' 'Well-developed tubercle',
+		36 'Quadrate, pars otica and processus orbitalis, the orbital angle (the angle between their long axes, sensu Elzanowski & Stidham 2010: p. 310)' /  'Obtuse, above 100 degrees' 'Right or acute angle, 90 degrees or less',
+		37 'Quadrate, processus orbitalis shape in lateral view and interaction of the dorsal margin with the rostral pars otica' /  'Processus orbitalis rectangular, deep curvature of the dorsal margin' 'Processus orbitalis long and slender, deep curvature of dorsal margin, respective dorsal/rostral margins of the processus orbitalis follow the long axis of the processes ' 'Processus orbitalis increases in dorsoventral width towards the pars otica and body of the quadrate, gentle curvature of dorsal margin as it interacts with rostral pars otica ' 'Processus orbitalis widely triangular, dorsal curvature shallow or near absent, little distinction between dorsal margin of processus orbitalis and rostral margin of pars otica',
+		38 'Quadrate, processus orbitalis and pars mandibularis, condylus pterygoideus and facies articularis pterygoidea' /  'Adjacent, both positioned on pars mandibularis, extends onto the medial side of pars mandibularis and the caudal processus orbitalis' 'Adjacent, both positioned on pars mandibularis, does not extend onto the medial side, condylus pterygoideus is flat, or a lowly-raised tubercle' 'Same as 1 but condylus pterygoideus is a raised and well-developed tubercle' 'Condylus pterygoideus and facies articularis pterygoidea widely separated, facies articularis pterygoidea on the processus orbitalis and flat' 'Same as 3, but the facies articularis pterygoidea is a distinct, raised tubercle',
+		39 'Quadrate, pars mandibularis, processus medialis, separation of the condylus pterygoideus and the condylus mandibularis medialis' /  Ventral_margin_of_the_condylus_pterygoideus_is_confluent_with_the_rostral_margin_of_the_condylus_mandibularis_medialis_ The_two_condyles_are_separated_by_a_narrow_furrow_ Wide_separation_of_the_two_condyles_,
+		40 'Quadrate, pars mandibularis, mandibular condyles' /  'Three mandibular condyles, condylus caudalis present' 'Bicondylar mandibular articulation, only two condyles present',
+		41 'Quadrate, pars mandibularis, condylus mandibularis lateralis and condylus mandibularis medialis, long axes' /  The_long_axes_of_the_lateral_and_medial_mandibular_condyles_are_aligned_to_the_rostrocaudal_axis 'The medial condyle is slightly rotated, with its rostral terminus angled rostromedially' The_medial_condyle_has_its_long_axis_near_perpendicular_to_that_of_the_lateral_condyle,
+		42 'Quadrate, pars mandibularis, processus lateralis, processus submeaticus and prominentia submeatica' /  Absent With_prominentia_submeatica_only_ With_prominentia_submeatica_and_processus_submeaticus With_processus_submeaticus_only,
+		43 'Quadrate, pars mandibularis, processus lateralis, fovea quadratojugalis' /  Absent 'Present, flat' 'Present, shallow' 'Present, deep',
+		44 'Quadrate, pars mandibularis, processus lateralis, cotyla quadratojugalis, osseous rim extends between the two facies enclosing the cotyla quadratojugalis caudoventrally' /  'Absent, large notch may be present' Osseous_rim_is_a_thin_bridge_forming_a_foramen_with_the_rostroventral_margin_of_the_fovea_quadratojugalis 'Complete enclosure, a very small foramen may be present, the wall is low and curved' 'Same as 2, but the formed wall is raised and straight ',
+		45 'Mandible, pars symphysalis, rostral apex, shape in dorsal and ventral views' /  'Broadly rounded, spatulate, almost straight rostral margin' Rounded_rostrally 'Angular, blunt' 'Angular, pointed',
+		46 'Mandible, pars symphysalis, rostral view, ventral convexity' /  'Deeply convex, lateral side curves steeply dorsally' Shallowly_convex 'Almost flat, convexity absent near rostral apex',
+		47 'Mandible, pars symphysalis, length relative to complete mandible length' /  'Short, restricted to most rostral quarter of the mandible maximally' 'Extended significantly caudally, greater than one quarter the length of the entire mandible',
+		48 'Mandible, ramus mandibulae, dorsal and ventral views, caudal divergence' /  'Only small divergence, rami near parallel, thin, consistent inter-ramal width' 'Slight divergence, thin inter-ramal width gradually increasing caudally ' 'Great divergence, largely increasing inter-ramal width caudally ',
+		49 'Mandible, ramus mandibulae, lateral views, curvature' /  Ventrally_concave_ 'Absent, mandibular rami straight' Dorsally_convex_,
+		50 'Mandible, pars intermedia and pars symphysalis, mediolateral width in dorsal view' /  Thin 'Mediolaterally wide, robust',
+		51 'Mandible, pars intermedia, lateral view, form' /  'Thin, ventrally angled medially' 'Relatively straight, thin' 'Relatively straight, wide',
+		52 'Mandible, pars intermedia, groove extends rostrocaudally along on the lateral mandibular rami, ventral of margo tomialis' /  Absent Present_but_broad 'Present but thin, flat and often not well-defined' 'Present, well-defined for the complete rostrocaudal length of pars intermedia',
+		53 'Mandible, pars intermedia, fenestra rostralis mandibulae' /  Absent 'Open laterally, completely covered medially ' Large_laterally_but_partially_covered_medially_by_the_os_dentale_ Thin_slit_between_bones_medially_and_laterally 'Distinct, large, oval foramen open laterally and medially ',
+		54 'Mandible, regio coronoidei, angulus dorsalis mandibulae and processus coronoideus, coincident or on same raised ridge dorsally elevated from the tomial margin' /  Absent Present,
+		55 'Mandible, margo tomialis' /  'Sharp, crest-like margo tomialis' 'Rounded, wide, ventrally extended margo tomialis' Margo_tomialis_medially_flanked_by_a_flat_but_oblique_tomial_surface 'Flares laterally to create a flattened, medially sloped surface rostrally',
+		56 'Mandible, fossa articularis quadratica, cotylae fossa articularis' /  Three_cotylae Two_cotylae_parallel 'Two cotylae, long axis perpendicular due to increased mediolateral width of the lateral cotyla',
+		57 'Mandible, fossa articularis quadratica, cotyla medialis, shape' /  'Mediolaterally wide, rounded oval' Rostrocaudally_elongate,
+		58 'Mandible, fossa articularis quadratica, cotyla medialis, rostral overhang with respect to more ventral processus medialis mandibularis' /  Absent Rostral_margin_creates_a_slight_hemispherical_arc 'Same as 1 but rostral overhang is more extreme, creates a distinct rounded shelf ',
+		59 'Mandible, processus medialis mandibularis extension medial of the cotyla medialis' /  Absent_or_very_small 'Present, rounded tubercle, slightly rostrally curved' 'Present, short protrusion medially ' 'Present, long and narrow, projects dorsally as well as medially ',
+		60 'Mandible, processus lateralis mandibularis' /  'Absent, the cotyla lateralis does not project laterally past the lateral margin of the mandibular rami ' 'Small, rounded projection, lateral surface slopes gently medioventrally ' 'Same as 1, but is more prominent, extends further laterally from the center of the fossa articularis quadratica' 'Dorsoventrally thin overhang over lateral side of the mandibular rami, rounded laterally' 'Same as 3 but curves rostrally at lateral-most tip',
+		61 'Mandible, pars caudalis, facies lateralis, crista paracoronoidea' /  'Aponeurosis paracoronoidea is absent and therefore, so is the associated crest' 'Two cristae separated, rostral part is well-defined and rostrally extended ' 'Crista paracoronoidea rostralis and caudalis closely approximated, or touching, at their dorsocaudal-most points creating an acute angle between them, respective rostral and caudal crests are perpendicular to near parallel to one another ' 'Crista paracoronoidea undivided, forms a prominent processus paracoronoideus ',
+		62 'Mandible, pars caudalis, processus retroarticularis caudal projection' /  'Absent or present only as a rostrocaudally short, dorsoventrally aligned crest along caudal aspect of pars caudalis' 'Present, rostrocaudally short projection, extends caudally no more than dorsoventral height at rostral base' 'Present, long caudal extension, total caudal projection > dorsoventral height at rostral origin (but < 2x)' 'Present, long caudal extension, total caudal projection greater than 2x dorsoventral height at rostral base',
+		63 'Mandible, pars caudalis, processus retroarticularis dorsal curvature' /  Absent Small_dorsal_curvature_of_the_caudal_tip 'Steep but gentle curvature for much of the rostrocaudal length, recurvature at the tip may be present' 'Projects immediately and steeply dorsally, process acicular',
+		64 'Mandible, pars caudalis, processus retroarticularis, distinct flare laterally to be directed laterocaudally from the fossa articularis quadratica' /  Absent Present,
+		65 'Mandible, processus medialis mandibularis, caudal face of the process, form' /  'Region not depressed, caudal face of the process is dorsoventrally thin and may have a near horizontal, mediolaterally oriented crest ' 'Dorsoventrally expanded, region flat, fossa caudalis absent (without depression)' 'Dorsoventrally expanded, fossa caudalis is present but shallow' 'Dorsoventrally expanded, deep fossa caudalis ' The_caudal_surface_is_very_depressed_as_a_large_and_deep_recessus_conicalis_,
+		66 'Rostrum, co-ossification of rostral elements' /  Absent_or_partial Present,
+		67 'Rostrum, rostral terminus shape' /  'Broadly rounded, spatulate' Rounded_laterally_with_slightly_angular_apex Sharply_angular,
+		68 'Rostrum, apertura nasi ossea shape' /  'Large, rounded, comprises most of, or a large proportion of, the lateral sides of the rostrum, dorsoventrally tall' 'Intermediate in size, still oval and rounded but more restricted caudally, rostrocaudal length of the bill rostral of the nares is up to half the rostrocaudal length of the nasal opening itself' 'Dorsoventrally narrow oval relative to states 0 and 1, rostrocaudal length of the bill rostral of the nares is equal to or slightly greater than the rostrocaudal length of the nares themselves, restricted caudodorsally on rostrum' Very_small_relative_to_size_of_rostrum_and_majorly_restricted_caudodorsally_towards_craniorostral_hinge,
+		69 'Rostrum, palatal surface, osseous plate-like palate and shape of the fenestra palatina' /  'Absent, elements unfused, palate open, fenestra palatina is not enclosed caudally' 'Present but retains a large, rounded fenestra palatina' 'Completely fused osseous plate, enclosed or reduced fenestra palatina',
+		70 'Rostrum, contributors to the plate-like palatal roof, caudal of the fenestra palatina' /  'Absent, no closure ' 'Present, created by fusion between the vomer, palatines, and praemaxillaria' 'Present, created by medial fusion of the processus maxillopalatinus of the maxillare',
+		71 'Rostrum, positioning of the os palatinum (processus rostralis palatini) relative to the processus jugalis of the os maxillare' /  Os_palatinum_interacts_with_the_maxillare_independently_of_the_more_lateral_or_laterocaudally_positioned_processus_jugalis 'Intermediate, the os palatinum converges rostrally with the slightly more dorsolateral processus jugalis, a concavity lateral of the processus rostralis palatini is formed' 'The os palatinum converges with the processus jugalis at almost the exact same point, but the processus jugalis is relatively more ventral of the os palatinum ',
+		72 'Rostrum, os quadratojugale articulates with the rostrum' /  Absent Present,
+		73 'Rostrum, bony palate, type' /  Desmognathous Schizognathous,
+		74 'Rostrum, os palatinum, pars lateralis, form and status' /  'Pars lateralis absent or present only as a slightly enlarged lateral margin (crista lateralis)' 'Pars lateralis lateroventrally flared, does not extend ventrally past the level of the tomial margin' Pars_lateralis_extends_noticeably_ventrally_beyond_the_level_of_the_tomial_margin,
+		75 'Rostrum, os palatinum fusion to os pterygoideum' /  Absent Present,
+		76 'Rostrum, ossa palatina, palatines are fused along the midline caudally, with or without vomer' /  Absent Present ; 
+	MATRIX
+	Dromaius_novaehollandiae     1001320300030000020000103030201020000000203322011001{0 1}03000100000111011000010
+	Casuarius_casuarius          002132030003000002000010303??01020000000203012021001{0 1}030000000001?2011000010
+	Anhima_cornuta               1121211133101110222101012101121032003111031030022010010110322220212112100201
+	Anseranas_semipalmata        1120112144{0 1}01111131010112202{0 1}22030113201013310011123111111323220311222000101
+	Dendrocygna_bicolor          11001122450?2121131020112212110230313211022000001123311212323320410322200101
+	Oxyura_australis             0100002245002121132210111212120030312111022102001123111212323220411222200101
+	Cereopsis_novaehollandiae    0100012245101120122010011112220040412211011202001023010112323320410122200101
+	Cygnus_atratus               1100012245002110131020112212121040213111023301011123211212323220410212200101
+	Anser_caerulescens           1100112245101101032020112212120040313111022310010123011212323320411222200101
+	Tadorna_tadornoides          0100012245111111121220112212110030{1 2}12211022202000123211212333220411212200101
+	Chenonetta_jubata            01000?224501001010121121121212003031221102121200112321121233{2 3}320410112200101
+	Anas_supercilliosa           1100012245011111122220211212120030{2 3}12111023302000123211212333220410212200101
+	Aythya_australis             0100112245002121221220112212120030{2 3}12211012202001123?11212333320410212200101
+	Melanitta_perspicillata      0110012245001120031210112212110030312101023211011123211112343220410212200101
+	Leipoa_ocellata              0101001012000000000001011100021211002311103030022012300211321231002000001000
+	Alectura_lathami             0101111012000000110001211100021111002411103230022012100110321231002000001000
+	Acryllium_vulturinum         1101001041020000110201210200110111001421203020022012000110321330002000001000
+	Callipepla_californica       0101001021120000000201210101110112003401102220022012000110322231002000001000
+	Pavo_muticus                 0101011021020000110201211100010111001321202031012012100110322231002000001000
+	Gallus_gallus                0101011021120000000201210100110312001421202030022012300110322331002000001000
+	Coturnix_japonica            0101001021120000000201210100010111001411202031022012400110312231002000001000
+	Perdix_perdix                01010?1021120000000001210200011111001311203021022012400110322331002000001000
+	Lagopus_lagopus              0101001021020000000001210101110311001411001032022012400110322331002100001000
+	Asteriornis_maastrichtensis  ?101??{1 2}???????????????????0??2121000332110321001101???1?113?????{0 1 2 3}0110?001???
+	Genyornis_newtoni            22122?11342332002221000122222011{0 1}3003101011012011010012?11212210210322100201
+	Ilbandornis_lawsoni          ?2?2211?34?3?????????????????011130???010110????101021211121????2?????????0?
+	Ilbandornis_woodburnei       ?2??21113423210022210001?????011130???010110????101021211121????2?????????0?
+	Dromornis_murrayi            32?3111???2321002321000???2?????????????????10011010012111??211???????????0?
+	Dromornis_planei             320320113423210023210001222220120300310101??1001101001211?212110210322100?01
+	Dromornis_stirtoni           32032111342321??2321??????22201213003101011010011010012111?12110211322100?0?
+	Gastornis_giganteus          22020010210?320020100?011110011?03012211103330120010000110322211?1232?011100
+	Sylviornis_neocaledoniae     12111010121200001211010120100111120022010033301?201000011030{1 2}231?12000011001
+	Nettapterornis_oxfordi       0100??1245??1121?21200?1220????????????????????????????1102122103103?210?10?
+	Conflicto_antarcticus        1100??12450?111102020011110??20?202111112022??010023?1?11032{2 3}11031?11?10010?
+	Presbyornis_pervetus         1100002245??111102??0001?0012210{0 3}041231100331?010123?1?????2321041022220?101
+
+
+;
+
+END;
+
+BEGIN ASSUMPTIONS;
+	OPTIONS DEFTYPE = unord;
+	TYPESET MorphoclineOrdered = ord: 1 4 7 12 13 14 15 18 25 28 29 30 38 39 41 44 49 58 60 62 65 68 69 71 74 ;
+
+END;
+
+BEGIN PAUP;
+	LOG start file = Anseriformes.log;
+	SET CRITERION = parsimony;
+	Pset msTaxa = uncertain;
+	Pset Collapse = No ;
+	[DELETE Asteriornis_maastrichtensis ;]
+	ASSUME TYPESET = MorphoclineOrdered;
+	Outgroup 1 - 2 ;
+	Set root = outgroup outRoot = monophyl;
+	CONSTRAINTS molecular backbone = ( ( Casuarius_casuarius, Dromaius_novaehollandiae) , ( ( ( Leipoa_ocellata, Alectura_lathami ) , ( Acryllium_vulturinum, ( Callipepla_californica, ( ( Pavo_muticus, ( Gallus_gallus, Coturnix_japonica ) ) , (Perdix_perdix, Lagopus_lagopus ) ) ) ) ) , ( Anhima_cornuta , ( Anseranas_semipalmata , ( Dendrocygna_bicolor , ( Oxyura_australis , ( Cereopsis_novaehollandiae , ( Cygnus_atratus, Anser_caerulescens ) ) , ( Tadorna_tadornoides , ( Chenonetta_jubata , ( Anas_supercilliosa , Aythya_australis , Melanitta_perspicillata  ) ) ) ) ) ) ) ) ) ;
+	Set maxtrees = 10000 increase = auto;
+	Hsearch constraints = molecular enforce = yes addseq = random nreps = 10000 rstatus = yes nchuck = 100 chuckscore = 1 hold = 10 swap = tbr;
+	SAVETREES File = allbest.trees root = yes brlens = yes;
+	CONTREE / treefile = STRICTconsensus.tree root = outgroup;
+	CONTREE / strict = no majrule = yes treefile = MAJORITY-RULEconsensus.tree root = outgroup;
+	DESCRIBETREES / plot = cladogram root = outgroup outroot = monophyl apolist = yes diag = yes opt = acctran;
+	BOOTSTRAP nreps=10000 conlevel=50 grpfreq=yes keepall=yes brlens=yes treefile=bootstrap10000.trees replace=yes search=heuristic / addseq=random nreps=100 nchuck=1000 chuckscore=1 hold=10 swap=tbr ;
+	SAVETREES from=1 to=1 file=BootstrapConsensus.tree savebootp=nodelabels;
+	LOG stop;
+	
+END;

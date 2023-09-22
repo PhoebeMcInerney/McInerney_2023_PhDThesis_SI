@@ -1,0 +1,284 @@
+---
+title: "Untitled"
+author: "Phoebe McInerney"
+date: "2023-07-10"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r Required Packages, echo = FALSE}
+
+library(FactoMineR)
+library(factoextra)
+library(ggplot2)
+library(tidyr)
+library(dplyr)
+library(MASS)
+library(reshape2)
+library(cowplot)
+library(ggfortify)
+library(geomorph)
+library(phytools)
+library(devtools)
+
+devtools::install_github("https://github.com/luisDVA/annotater", type = "source")
+
+#Specify the location of the working .RMD document as the working directory
+  setwd(dirname(getActiveDocumentContext()$path))
+
+```
+
+#PCA plotting
+```{r PCA Trad Plot- comp 1 and 2- HighTax / Y}
+#Data: Phylogenetic Transformed PCA produces a PCA independent of phylogeny
+#Shapes: Higher Taxonomy
+#Polygons: Higher Taxonomy
+
+PCA.Trad.Plot2 <- ggplot(PCA.Phylot.Components, aes(x = PCA.Phylot.Components[, 1], y = PCA.Phylot.Components[, 2])) +
+                          #Adjust the size, shape, and colour of the points
+                            geom_point(size = 4, shape = 16, aes(colour = MetaData$HigherTaxonomy)) +
+                          #Assign the colours for the groups of points
+                             scale_color_manual(values=c("Anseriformes" = "#86a0d3",
+                                                      "Dromornithidae" = "#e0a43d", 
+                                                      "Galliformes" = "#9ab3a3",
+                                                      "Palaeognathae" = "#ba5757"))+
+                          #Add in the heading for the legend regarding the colour of the points
+                            guides(colour = guide_legend(title = "Higher Taxonomy")) +
+                          #Add in species names labels and adjust where they are positioned etc.
+                            geom_label_repel(aes(label = MetaData$Data.names), 
+                                             box.padding = 0.35, 
+                                             point.padding = 0.5, 
+                                             segment.color = 'grey50', 
+                                             max.overlaps = 10) +
+                          #Label the axes
+                            labs(x = "Component 1: 46.95%", y ="Component 2: 11.44%") +
+                          #set the theme
+                            theme_bw() + 
+                          #Change the theme settings
+                            theme(axis.text.x = element_text(size = 9), 
+                                axis.text.y = element_text(size = 9),
+                                axis.title = element_text(size = 10, face = "plain"),
+                                panel.grid = element_blank(), 
+                                legend.text = element_text(size = 10)) +
+                          #Include and set the dotted lines
+                            geom_hline(yintercept = 0, lty = 2) +
+                            geom_vline(xintercept = 0, lty = 2) +
+                          #Add in polygons
+                            stat_chull(aes(colour = MetaData$HigherTaxonomy, fill = MetaData$HigherTaxonomy),
+                                       geom = "polygon",
+                                       alpha = 0.2,
+                                       size = 0.9) +
+                            scale_fill_manual(values=c("Anseriformes" = "#86a0d3",
+                                                      "Dromornithidae" = "#e0a43d", 
+                                                      "Galliformes" = "#9ab3a3",
+                                                      "Palaeognathae" = "#ba5757"))
+
+
+#View the plot
+PCA.Trad.Plot2
+
+```
+
+```{r PCA Trad Plot- comp 1 and 3- HighTax / Y}
+#Data: Phylogenetic Transformed PCA produces a PCA independent of phylogeny
+#Shapes: Higher Taxonomy
+#Polygons: Higher Taxonomy
+
+PCA.Trad.Plot2.5 <- ggplot(PCA.Phylot.Components, aes(x = PCA.Phylot.Components[, 1], y = PCA.Phylot.Components[, 3])) +
+                          #Adjust the size, shape, and colour of the points
+                            geom_point(size = 4, shape = 16, aes(colour = MetaData$HigherTaxonomy)) +
+                          #Assign the colours for the groups of points
+                             scale_color_manual(values=c("Anseriformes" = "#86a0d3",
+                                                      "Dromornithidae" = "#e0a43d", 
+                                                      "Galliformes" = "#9ab3a3",
+                                                      "Palaeognathae" = "#ba5757"))+
+                          #Add in the heading for the legend regarding the colour of the points
+                            guides(colour = guide_legend(title = "Higher Taxonomy")) +
+                          #Add in species names labels and adjust where they are positioned etc.
+                            #geom_label_repel(aes(label = MetaData$Data.names), 
+                                             #box.padding = 0.35, 
+                                             #point.padding = 0.5, 
+                                             #segment.color = 'grey50', 
+                                             #max.overlaps = 10) +
+                          #Label the axes
+                            labs(x = "Component 1: 46.95%", y ="Component 3: 7.88%") +
+                          #set the theme
+                            theme_bw() + 
+                          #Change the theme settings
+                            theme(axis.text.x = element_text(size = 9), 
+                                axis.text.y = element_text(size = 9),
+                                axis.title = element_text(size = 10, face = "plain"),
+                                panel.grid = element_blank(), 
+                                legend.text = element_text(size = 10)) +
+                          #Include and set the dotted lines
+                            geom_hline(yintercept = 0, lty = 2) +
+                            geom_vline(xintercept = 0, lty = 2) +
+                          #Add in polygons
+                            stat_chull(aes(colour = MetaData$HigherTaxonomy, fill = MetaData$HigherTaxonomy),
+                                       geom = "polygon",
+                                       alpha = 0.2,
+                                       size = 0.9) +
+                            scale_fill_manual(values=c("Anseriformes" = "#86a0d3",
+                                                      "Dromornithidae" = "#e0a43d", 
+                                                      "Galliformes" = "#9ab3a3",
+                                                      "Palaeognathae" = "#ba5757"))
+
+
+#View the plot
+PCA.Trad.Plot2.5
+
+```
+
+```{r PACA Phylo Plot- comp 1 and 2- Body Mass / Y}
+
+#Data: Phylogenetic Transformed PCA produces a PCA independent of phylogeny
+#Shapes: Higher Taxonomy
+#Polygons: Body mass
+
+PACA.Phylo.Plot2 <- ggplot(PACA.Phylo.Components, aes(x = PACA.Phylo.Components[, 1], y = PACA.Phylo.Components[, 2])) +
+                            geom_point(size = 3, aes(shape = MetaData$HigherTaxonomy)) +
+                            guides(colour = guide_legend(title = "Higher Taxonomy"),
+                                   shape = guide_legend(title = "Body Mass")) +
+                          #Add in species names labels and adjust where they are positioned etc.
+                           geom_label_repel(aes(label = MetaData$Data.names), 
+                                             box.padding = 0.35, 
+                                             point.padding = 0.5, 
+                                             segment.color = 'grey50', 
+                                             max.overlaps = 20) +
+                          #Label the axes
+                            labs(x = "Component 1: 78.22%", y ="Component 2: 19.7%") +
+                          #set the theme
+                            theme_bw() + 
+                          #Change the theme settings
+                            theme(axis.text.x = element_text(size = 9), 
+                                axis.text.y = element_text(size = 9),
+                                axis.title = element_text(size = 10, face = "plain"),
+                                panel.grid = element_blank(), 
+                                legend.text = element_text(size = 10)) +
+                          #Include and set the dotted lines
+                            geom_hline(yintercept = 0, lty = 2) +
+                            geom_vline(xintercept = 0, lty = 2) +
+                          #Add in polygons
+                            stat_chull(aes(colour = MetaData$Body.Mass.dis, fill = MetaData$Body.Mass.dis),
+                                       geom = "polygon",
+                                       alpha = 0.4,
+                                       size = 1.2) +
+                            scale_colour_manual(values=c("<2.5" = "#ba5757",
+                                                      ">2.5 but <3.2" = "#e0a43d", 
+                                                      ">3.2 but <4.0" = "#9ab3a3",
+                                                      ">4.0 but <5.0" = "#86a0d3",
+                                                      ">5.0" = "#7C6E7F"))+
+                            scale_fill_manual(values=c("<2.5" = "#ba5757",
+                                                      ">2.5 but <3.2" = "#e0a43d", 
+                                                      ">3.2 but <4.0" = "#9ab3a3",
+                                                      ">4.0 but <5.0" = "#86a0d3",
+                                                      ">5.0" = "#7C6E7F"))
+
+#View the plot
+PACA.Phylo.Plot2
+
+#To figure the phylogenetic tree on the graph
+plot(PACA.Phylo, main = "PCA.PCA.1 and 2", phylo = TRUE, pch = 16, plot.window(0.4, 0.2))
+
+```
+
+
+```{r Plot Axis Deformation 2D}
+
+#Plot min and max shape values for each component warped from the mean shape in a 2D space
+
+#Assign a mean shape for use with plotRefToTarget from the GPA coordinate data
+ref <- mshape(Superposed.Lms$coords)
+
+#If the line linking the landmarks is not looking how you want it to, then use the interactive function define.links()
+          #Once links are made: to finish, double right click on the end landmark so it says 'link landmarks 65 and 65' (same number), then click 'n'
+      #Define_Links <- define.links(PCA.PhyloT$shapes$shapes.comp1$min, ptsize = 10)
+          #Print this to file so that you do not need to re-define the landmarks everytime.
+      #write.csv(Define_Links, file = "Landmark_Links_Defined.csv", row.names = FALSE)
+
+Define_Links <- read.csv("../Data/Landmark_Links_Defined.csv")
+
+#PCA
+plotRefToTarget(ref, PCA.PhyloT$shapes$shapes.comp1$min, links = Define_Links, ptsize = 10)
+plotRefToTarget(ref, PCA.PhyloT$shapes$shapes.comp1$max, links = Define_Links, ptsize = 10)
+plotRefToTarget(ref, PCA.PhyloT$shapes$shapes.comp2$min, links = Define_Links, ptsize = 10)
+plotRefToTarget(ref, PCA.PhyloT$shapes$shapes.comp2$max, links = Define_Links, ptsize = 10)
+plotRefToTarget(ref, PCA.PhyloT$shapes$shapes.comp3$min, links = Define_Links, ptsize = 10)
+plotRefToTarget(ref, PCA.PhyloT$shapes$shapes.comp3$max, links = Define_Links, ptsize = 10)
+
+#PACA
+#Cannot get shapes from the phy.signal analysis so need to run PACA independently to get deformations
+PACA.Phylo <- gm.prcomp(Superposed.Lms$coords, phy = Tree, align.to.phy = TRUE)
+
+plotRefToTarget(ref, PACA.Phylo$shapes$shapes.comp1$min, links = Define_Links, ptsize = 10)
+plotRefToTarget(ref, PACA.Phylo$shapes$shapes.comp1$max, links = Define_Links, ptsize = 10)
+plotRefToTarget(ref, PACA.Phylo$shapes$shapes.comp2$min, links = Define_Links, ptsize = 10)
+plotRefToTarget(ref, PACA.Phylo$shapes$shapes.comp2$max, links = Define_Links, ptsize = 10)
+plotRefToTarget(ref, PACA.Phylo$shapes$shapes.comp3$min, links = Define_Links, ptsize = 10)
+plotRefToTarget(ref, PACA.Phylo$shapes$shapes.comp3$max, links = Define_Links, ptsize = 10)
+
+```
+
+```{r Brain size relative to complete and caudal skull aspect ratios}
+
+Skull_Brain <- ggplot(BrainNA_MetaData, aes(x = Skull.AspectRatio.log, y = Endosurface.log)) +
+                            geom_point(size = 4, shape = 16, aes(colour = HigherTaxonomy)) +
+                             scale_color_manual(values=c("Anseriformes" = "#86a0d3",
+                                                      "Dromornithidae" = "#e0a43d", 
+                                                      "Galliformes" = "#9ab3a3",
+                                                      "Palaeognathae" = "#ba5757"))+
+                            guides(colour = guide_legend(title = "Higher Taxonomy")) +
+                            geom_label_repel(aes(label = Data.names), 
+                                             box.padding = 0.35, 
+                                             point.padding = 0.5, 
+                                             segment.color = 'grey50', 
+                                             max.overlaps = 5) +
+                            theme_bw() + 
+                            labs(x = "Complete Skull Aspect Ratio (log)", y ="Endocast Surface Area (log)") +
+                            theme(axis.text.x = element_text(size = 9), 
+                                axis.text.y = element_text(size = 9),
+                                axis.title = element_text(size = 10, face = "plain"),
+                                panel.grid = element_blank(), 
+                                legend.text = element_text(size = 9),
+                                legend.title = element_text(size = 10)) +
+                            geom_smooth(method = "lm", colour = "black", se = TRUE) + 
+                                stat_regline_equation(label.x=0.0, label.y=4.8)+
+                                stat_cor(label.x=0.0, label.y=4.5)
+
+#View the plot
+Skull_Brain
+
+
+CCSkull_Brain <- ggplot(BrainNA_MetaData, aes(x = CC.AspectRatio.log, y = Endosurface.log)) +
+                            geom_point(size = 4, shape = 16, aes(colour = HigherTaxonomy)) +
+                             scale_color_manual(values=c("Anseriformes" = "#86a0d3",
+                                                      "Dromornithidae" = "#e0a43d", 
+                                                      "Galliformes" = "#9ab3a3",
+                                                      "Palaeognathae" = "#ba5757"))+
+                            guides(colour = guide_legend(title = "Higher Taxonomy")) +
+                            geom_label_repel(aes(label = Data.names), 
+                                             box.padding = 0.35, 
+                                             point.padding = 0.5, 
+                                             segment.color = 'grey50', 
+                                             max.overlaps = 5) +
+                            theme_bw() + 
+                            labs(x = "Caudal Skull Aspect Ratio (log)", y ="Endocast Surface Area (log)") +
+                            theme(axis.text.x = element_text(size = 9), 
+                                axis.text.y = element_text(size = 9),
+                                axis.title = element_text(size = 10, face = "plain"),
+                                panel.grid = element_blank(), 
+                                legend.text = element_text(size = 9),
+                                legend.title = element_text(size = 10)) +
+                            geom_smooth(method = "lm", colour = "black", se = FALSE) + 
+                                stat_regline_equation(label.x=0.5, label.y=4.2)+
+                                stat_cor(label.x=0.5, label.y=4.0)
+
+#View the plot
+CCSkull_Brain
+
+ggarrange(Skull_Brain, CCSkull_Brain, 
+          labels = c("a", "b"),
+          ncol = 1, nrow = 2, align = "v")
+```
+

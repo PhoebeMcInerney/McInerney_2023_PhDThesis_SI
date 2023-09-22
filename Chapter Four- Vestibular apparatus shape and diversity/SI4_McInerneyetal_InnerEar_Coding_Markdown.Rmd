@@ -1,0 +1,713 @@
+---
+title: "McInerneyetal._Dromornithid_InnerEar"
+author: "Phoebe McInerney"
+date: "2023-06-30"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r Required Packages, echo = FALSE}
+  
+  library(ggplot2) # Create Elegant Data Visualisations Using the Grammar of Graphics, CRAN v3.4.2
+  library(geomorph) # Geometric Morphometric Analyses of 2D and 3D Landmark Data, CRAN v4.0.5
+  library(ape) # Analyses of Phylogenetics and Evolution, CRAN v5.7-1
+  library(nlme)
+  library(qpcR) # Modelling and Analysis of Real-Time PCR Data, CRAN v1.4-1
+  library(readr) # Read Rectangular Text Data, CRAN v2.1.4
+  library(measurements) # Tools for Units of Measurement, CRAN v1.5.1
+  library(DescTools) # Tools for Descriptive Statistics, CRAN v0.99.49
+  library(tidyr) # Tidy Messy Data, CRAN v1.3.0
+  library(devtools)
+  library(rstudioapi)
+  library(ggpubr) # 'ggplot2' Based Publication Ready Plots, CRAN v0.6.0
+  library(ggrepel) # Automatically Position Non-Overlapping Text Labels with 'ggplot2', CRAN v0.9.3
+  library(berryFunctions)
+  library(dplyr)
+
+
+devtools::install_github("https://github.com/luisDVA/annotater", type = "source")
+
+#Specify the location of the working .RMD document as the working directory
+  setwd(dirname(getActiveDocumentContext()$path))
+  
+```
+
+```{r File Import}
+
+
+#Read data files into R
+#read.csv("X", arguments) opens file "X" and applies the arguments listed, in this case row.names = 1 (the first row is names for the data) and header = true (The first column is names too) 
+
+#Read number key and group assignments
+Number.Table <- read.csv("../Data/Number_Legend_PCA.csv")	 
+  #Read tree used in main analyses, use read.tree() if the file is a newick format tree
+  Tree <- read.nexus("../Data/SI3_McInerneyetal_Galloanseres_Dromornithid_Tree.tre")	                                 
+    vcv<-vcv.phylo(Tree,model="Brownian",cor=FALSE)
+
+#Read in a vector of colours for each landmark and set of semilandmarks
+Landmark.names <- read.csv("../Data/Landmark_names.csv" , header = FALSE)[,1]	
+
+#Read in p x 3 matrix that specifies tangent vectors of sliding semilandmarks
+Sliders.File <- read.csv("../Data/Landmark_Sliders.csv" , row.names = 1 , header = T)
+    #Create a new matrix (sliders) from the sliders.temp Data file, state the number of columns
+    Sliders.Matrix <- matrix(unlist(Sliders.File) , ncol = 3)                                   
+        #Remove the sliders which end up with duplicate coordinates to the fixed landmarks
+        #Sliders.Matrix <- Sliders.Matrix[c(-1, -21, -22, -39, -40, -57, -58, -60, -61, -64, -65, -67, -68, -70), ] 
+    #Allocate the row names from sliders.temp to the rows of sliders
+    rownames(Sliders.Matrix) <- rownames(Sliders.File)                                                
+
+#Read in landmark data
+Folder.temp <- "../Data/Specimen_Landmark_Data n=45"
+
+#Create a set of Values based on the species names in the titles of the .csv landmark files in folder.temp ^
+  #This allows for the landmark files to be specified by using files.temp and files.temp.full. 
+Files.Temp <- gsub(" Landmarks.csv" , "" , list.files(Folder.temp))                       
+      #gsub() substitutes the part of the file names allocated by the first " " with what is in the the second " ". The file names will now lack " Landmarks.csv".
+  
+#list.files(X) allocated the folder X from which to create a list of the files with the gsub() function applied
+Files.Names.Full <- list.files(Folder.temp, full.names = TRUE)
+      #Creates another list but with the full names of each file
+  
+#Compile landmark data into an array
+Landmarks.List <- lapply(Files.Names.Full, read.csv, row.names = 1, header = TRUE)          
+      #lappy(X, FUN, arguments) imports files by applying the FUN (function) to X (the Values name allocation of the files) with optional arguments for the function
+
+
+  #Set the names of the R object (in this case, the Landmarks.List in Data) as the species names by applying the names from the files.temp Values list.
+  names(Landmarks.List) <- Files.Temp
+  
+```
+
+```{r Variation in unit of size}
+
+#How to manage variation in unit size measurements
+  
+#Create a list of the data sets which have the um measurement
+ Landmarks.um <- Landmarks.List[c("Acryllium_vulturinum", "Alectura_lathami", "Anas_supercilliosa", "Anhima_cornuta", "Anser_caerulescens", "Anseranas_semipalmata", "Aythya_australis", "Bizura_lobata", "Branta_canadensis", "Callipepla_californica", "Cereopsis_novaehollandiae", "Chenonetta_finschi", "Chenonetta_jubata", "Coturnix_japonica", "Crypturellus_obsoletus", "Cygnus_atratus", "Dendrocygna_bicolor", "Genyornis_newtoni", "Lagopus_lagopus", "Lophodytes_cucullatus", "Melanitta_perspicillata", "Pavo_muticus", "Perdix_perdix", "Talegalla_fuscirostris")]
+    #Create a list of the names for um files
+    Landmarks.um.names <- Files.Temp[c(1:7, 9:11, 13, 15:20, 25, 27, 29, 32, 38, 39, 45)]
+    #Convert to an array
+    Landmarks.um.array <- array(unlist(Landmarks.um) , dim = c(dim(Landmarks.um[[1]]) , length(Landmarks.um)))
+    #Convert the units for that array
+    #VW this is so cool! I usually just multiply/divide by 1000 or whatever.
+    Landmarks.um.conv <- conv_unit(Landmarks.um.array, "um", "mm")
+        #apply the names
+        dimnames(Landmarks.um.conv)[[ 3 ]] <- Landmarks.um.names
+        dimnames(Landmarks.um.conv)[[ 1 ]] <- Landmark.names
+    #check the array
+    Landmarks.um.conv
+    
+#Create a list of mm data sets
+Landmarks.mm <- Landmarks.List[c("Barawertornis_tedfordi", "Casuarius_casuarius", "Chauna_chavaria", "Dromaius_novaehollandiae", "Dromornis_planei", "Dromornis_stirtoni", "Gallus_gallus", "Ilbandornis_woodburnei", "Leipoa_ocellata", "Malachorynchus_membranaceus", "Megapodius_reinwardt", "Mionetta_blanchardi", "Mitu_mitu", "Nettapus_pulchellus", "Ortalis_vetula", "Oxyura_australis", "Rhea_americana", "Rhynchotus_rufescens", "Stictonetta_naevosa", "Sylviornis_neocaledoniae", "Tadorna_tadornoides")]
+    #Create a list of the names for um files
+    Landmarks.mm.names <- Files.Temp[c(8, 12, 14, 21:24, 26, 28, 30, 31, 33:37, 40:44)] 
+    #Convert to an array
+    Landmarks.mm.array <- array(unlist(Landmarks.mm) , dim = c(dim(Landmarks.mm[[1]]) , length(Landmarks.mm)))
+        #apply the names
+        dimnames(Landmarks.mm.array)[[ 3 ]] <- Landmarks.mm.names
+        dimnames(Landmarks.mm.array)[[ 1 ]] <- Landmark.names
+        
+  #Combine the two arrays, package DescTools
+  Landmarks.array.compl <- Abind(Landmarks.mm.array, Landmarks.um.conv, along=3, hier.names = TRUE)
+    #Check the array
+    Landmarks.array.compl
+
+```
+
+```{r Generalised Procrustes Analysis}
+
+#Run Procrustes superposition on the landmark data
+Superposed.Lms <- gpagen(Landmarks.array.compl , curves = Sliders.Matrix , ProcD = FALSE, surfaces = NULL, Proj = TRUE)
+  #Automatically assumes no curves and all fixed landmarks so make sure to have curves = curve.data, to make sure it accounts for sliding semilandmarks
+  #ProcD = FALSE stops the function from using Procrustes distance and instead uses bending energy. 
+  #Using bending energy here as we follow the methods of Bronzatti et al. (2021) and also Dickson et al. (2017), but see Perez et al. (2006) for summary of two types.
+  
+#Allocate names to the data
+  #Set the dimnames for the species
+  dimnames(Superposed.Lms$coords) [[3]] <- dimnames(Landmarks.array.compl) [[3]] 
+  #Set the dimnames of the rows
+  dimnames(Superposed.Lms$coords) [[1]] <- dimnames(Landmarks.array.compl) [[1]] 
+  
+#Check for outliers in the data
+plotOutliers(Superposed.Lms$coords, inspect.outliers = FALSE)
+    #To plot a 3D model of the outlier, see Fig. 6, change inspect.outliers to TRUE
+
+```
+
+#MetaData
+```{r Metadata File Incorp.}
+
+  #Import the Metadata file
+    MetaData <- read.csv("../Data/SI6_McInerneyetal_Species_MetaData.csv" , row.names = 1, header = TRUE)
+
+#Make sure the row names are the same as the data.names
+rownames(MetaData)<- MetaData$Data.names
+class(MetaData)
+
+```
+
+```{r Match the names across the MetaData, GPA output, and Tree file}
+        
+#Take the IDs (names) from your covariates list, and finds where they match your landmark data array
+match.names<-match(dimnames(Superposed.Lms$coords)[[3]], rownames(MetaData))
+
+#Check if names exist in both datasets - they match 100%, the all have to be TRUE
+dimnames(Superposed.Lms$coords)[[3]] %in% MetaData$Data.names
+    MetaData$Data.names %in%    dimnames(Superposed.Lms$coords)[[3]]
+    rownames(MetaData) %in%    dimnames(Superposed.Lms$coords)[[3]]
+    
+#Re-order Metadata names to be in the same order as landmark arrays
+MetaData <- MetaData[match.names,]
+    
+    #double checking - this has to be TRUE
+    rownames(MetaData)  == dimnames(Superposed.Lms$coords)[[3]]
+    #Checking that it was really just the rows that were re-ordered - also has to give TRUE
+    MetaData$Data.names == dimnames(Superposed.Lms$coords)[[3]]
+  
+#Add the centroid size measurements to the metadata file
+MetaData$Centroid.size <- Superposed.Lms$Csize
+MetaData$Centroid.size.L <- log10(Superposed.Lms$Csize)
+MetaData$RelativeCsize <- log(MetaData$Skull.AspectRatio/MetaData$Centroid.size)
+
+#Check if the phylogeny file has names that match the MetaData or the Superposed Lm coord data - These need to be TRUE so if FALSE, fix the order
+MetaData$Data.names == Tree$tip.label
+    dimnames(Superposed.Lms$coords)[[3]] ==Tree$tip.label
+
+#Match the row names in the MetaData to the tree tip labels
+Match.names_phylo <- match(Tree$tip.label, rownames(MetaData))
+    #Apply this arrangement to the MetaData dataset
+    MetaData <- MetaData[Match.names_phylo, ]
+    #Check that this has worked
+    rownames(MetaData) == Tree$tip.label
+
+Superposed.Lms$coords <- Superposed.Lms$coords[,,Match.names_phylo]
+Superposed.Lms$Csize <- Superposed.Lms$Csize[Match.names_phylo]
+
+MetaData$Data.names == Tree$tip.label
+
+dimnames(Superposed.Lms$coords)[[3]] ==Tree$tip.label
+
+#Print the tree to check that nothing here has been affected
+plot(Tree)
+
+#Create subsets of the data matrix
+  #Remove Cygnus atratus
+    NonCyg_MetaData <- MetaData %>% filter(MetaData$Data.names != "Cygnus_atratus") 
+
+```
+
+#Allometry
+```{r Allometry- Complete Graph}
+  
+AllometryPlot <- ggplot(MetaData, aes(x = MetaData$Centroid.size.L, y = MetaData$Body.Mass.log))+ 
+  geom_point(size = 2, shape = 16, aes(colour = Family)) +
+  scale_color_manual(values=c("Anhimidae" = "#405fa3",
+                              "Anseranatidae" = "#232d66",
+                              "Anatidae" = "#86a0d3",
+                              "Casuariidae" = "#c72b2b", 
+                              "Cracidae" = "#668a73",
+                              "Dromaiidae" = "#ab1717", 
+                              "Dromornithidae" = "#e0a43d", 
+                              "Megapodiidae" = "#425c4d", 
+                              "Numididae" = "#80ad8f", 
+                              "Odontophoridae" = "#9ab3a3", 
+                              "Phasianidae" = "#8adba3", 
+                              "Rheidae" = "#913030", 
+                              "Sylviornithidae" = "#059e24", 
+                              "Tinamidae" = "#ba5757")) +
+  geom_text(label=MetaData$Family, size = 9, hjust=10, vjust=5, fontface = 3) +  
+ #geom_label_repel(aes(label = rownames(MetaData)), box.padding = 0.35, point.padding = 0.5, segment.color = 'grey50', max.overlaps = 3)+
+        # ^ Adds in labels for each of the taxa
+  theme_bw() +
+  labs(y = "Log Body Mass", x ="Log Centroid Size")+
+  #Modify the labels for each of the axes
+  theme(axis.text.x = element_text(size = 9),                                               
+        axis.text.y = element_text(size = 9),
+        axis.title = element_text(size = 10, face = "plain"),
+        #Remove the background grid lines
+        panel.grid = element_blank(),
+        #Settings for the legend text
+        legend.text = element_text(size = 9),
+        legend.title = element_text(size = 10)) +                                             
+  #Add in regression equation, line of best fit, and confidence interval (se = TRUE)
+  geom_smooth(method = "lm", colour = "black", se = TRUE) + 
+      stat_regline_equation(label.x=1.2, label.y=5)+
+     stat_cor(label.x=1.2, label.y=4.5)
+
+#Add in prediction intervals
+  #With all taxa
+    model2 <- lm(Body.Mass.log ~ Centroid.size.L, data = MetaData)
+    summary(model2)
+      predict2 <- predict(model2, interval = "prediction")
+      predict2_df <- cbind(MetaData, predict2)
+
+#Add to graph
+      CandPAllometry <- AllometryPlot +
+          geom_line(data = predict2_df, aes(y=lwr), linetype = "dashed", colour = "black")+
+          geom_line(data = predict2_df, aes(y=upr), linetype = "dashed", colour = "black")
+
+#View the plot for checking and export
+CandPAllometry
+
+```
+
+```{r Allometry individual regressions}
+
+#Create a graph with the regressions for each taxonomic group
+IndividualAllometryPlot <- ggplot(MetaData, aes(x = MetaData$Centroid.size.L, y = MetaData$Body.Mass.log))+ 
+  geom_point(size = 2, shape = 16, aes(colour = HigherTaxonomy)) +
+   scale_color_manual(values=c("Anseriformes" = "#405fa3",
+                               "Anseranatidae" = "#232d66",
+                               "Galliformes" = "#668a73",
+                               "Palaeognathae" = "#ab1717", 
+                               "Dromornithidae" = "#e0a43d")) +
+  geom_text(label=MetaData$HigherTaxonomy, size = 12, hjust=10, vjust=5, fontface = 3) +  
+ #geom_label_repel(aes(label = rownames(MetaData)), box.padding = 0.35, point.padding = 0.5, segment.color = 'grey50', max.overlaps = 3)+
+        # ^ Adds in labels for each of the taxa
+  theme_bw() +
+  labs(y = "Log Body Mass", x ="Log Centroid Size")+
+  #Modify the labels for each of the axes
+  theme(axis.text.x = element_text(size = 9),                                               
+        axis.text.y = element_text(size = 9),
+        axis.title = element_text(size = 10, face = "plain"),
+        #Remove the background grid lines
+        panel.grid = element_blank(),
+        #Settings for the legend text
+        legend.text = element_text(size = 9),
+        legend.title = element_text(size = 10)) +
+  geom_smooth(method = "lm", aes(colour = HigherTaxonomy), se = FALSE, fullrange = FALSE)
+
+
+#View
+IndividualAllometryPlot
+
+```
+
+```{r Combine allometry plots into a figure}
+
+#Plot the two aloometry plots together
+ggarrange(CandPAllometry, IndividualAllometryPlot, 
+          labels = c("a", "b"),
+          ncol = 1, nrow = 2, align = "v")
+
+```
+
+```{r Allometry- Individual lineage graphs}
+#Subset extant Galliformes
+  Galliformes <- c("Acryllium_vulturinum", "Alectura_lathami", "Callipepla_californica", "Coturnix_japonica", "Gallus_gallus",
+                   "Lagopus_lagopus", "Leipoa_ocellata", "Megapodius_reinwardt", "Mitu_mitu", "Ortalis_vetula", "Pavo_muticus",
+                   "Perdix_perdix", "Talegalla_fuscirostris")
+      #Create Matrix with only extant Galliformes
+      ExtantGalliformes <- MetaData[Galliformes , ]
+      
+#Create Galliformes chart     
+  AllometryGalliformes <- ggplot(ExtantGalliformes, aes(x = ExtantGalliformes$Centroid.size.L, y = ExtantGalliformes$Body.Mass.log))+ 
+                          geom_point(size = 2, shape = 16, aes(colour = Family))+ 
+                          scale_color_manual(values=c("#668a73", "#425c4d", "#80ad8f", "#9ab3a3", "#8adba3"))+ 
+                          geom_text(label =ExtantGalliformes$Family, size = 9, hjust=10, vjust=5, fontface = 3)+ 
+                          geom_label_repel(aes(label = ExtantGalliformes$Data.names), box.padding = 0.35, point.padding = 0.5, segment.color = 'grey50', max.overlaps = 3)+
+                          geom_smooth(method = "lm", colour = "darkgreen", se = FALSE)+ 
+                          stat_regline_equation(label.x=1.2, label.y=5)+ 
+                          stat_cor(label.x=1.2, label.y=4.5)+ 
+                          theme_bw() + 
+                          labs(y = "Body Mass log10", x ="Centroid size log10")+
+                          theme(axis.text.x = element_text(size = 9), 
+                                axis.text.y = element_text(size = 9),
+                                axis.title = element_text(size = 10, face = "plain"),
+                                panel.grid = element_blank(), 
+                                legend.text = element_text(size = 10))
+      #view
+      AllometryGalliformes
+
+      
+#Subset extant Anseriformes
+  Anseriformes <- c("Anas_supercilliosa", "Anhima_cornuta", "Anser_caerulescens", "Anseranas_semipalmata", "Aythya_australis",
+                    "Bizura_lobata", "Branta_canadensis", "Cereopsis_novaehollandiae", "Chauna_chavaria", "Chenonetta_jubata",
+                    "Cygnus_atratus", "Dendrocygna_bicolor", "Lophodytes_cucullatus", "Malachorynchus_membranaceus",
+                    "Melanitta_perspicillata", "Nettapus_pulchellus", "Oxyura_australis", "Stictonetta_naevosa", "Tadorna_tadornoides")       
+      #Create Matrix with only extant Anseriformes
+      ExtantAnseriformes <- MetaData %>% filter(MetaData$HigherTaxonomy == "Anseriformes")
+      
+#Create Anseriformes chart
+  AllometryAnseriformes <- ggplot(ExtantAnseriformes, aes(x = ExtantAnseriformes$Centroid.size.L, y = ExtantAnseriformes$Body.Mass.log))+ 
+                          geom_point(size = 2, shape = 16, aes(colour = Family))+ 
+                          scale_color_manual(values=c("#405fa3", "#232d66", "#86a0d3"))+ 
+                          geom_text(label=ExtantAnseriformes$Family, size = 9, hjust=10, vjust=5, fontface = 3)+ 
+                          #geom_label_repel(aes(label = ExtantAnseriformes$Data.names), box.padding = 0, point.padding = 0, segment.color = 'grey50', max.overlaps = 50)+
+                          geom_smooth(method = "lm", colour = "darkblue", se = FALSE)+ 
+                          stat_regline_equation(label.x=1.1, label.y=3.6)+ 
+                          stat_cor(label.x=1.1, label.y=3.5)+ 
+                          theme_bw() + 
+                          labs(y = "Body Mass log10", x ="Centroid size log10")+
+                          theme(axis.text.x = element_text(size = 9), 
+                                axis.text.y = element_text(size = 9),
+                                axis.title = element_text(size = 10, face = "plain"),
+                                panel.grid = element_blank(), 
+                                legend.text = element_text(size = 10))
+      #view
+      AllometryAnseriformes
+      
+  
+#Subset Palaeognathae
+  Palaeognathae <- c("Casuarius_casuarius", "Dromaius_novaehollandiae", "Rhea_americana", "Rhynchotus_rufescens", "Crypturellus_obsoletus")       
+      #Create Matrix with only extant Palaeognathae
+      ExtantPalaeognathae <- MetaData[Palaeognathae , ]
+      
+#Create Palaeognathae chart
+  AllometryPalaeognathae <- ggplot(ExtantPalaeognathae, aes(x = ExtantPalaeognathae$Centroid.size.L, y = ExtantPalaeognathae$Body.Mass.log))+ 
+                          geom_point(size = 2, shape = 16, aes(colour = Family))+ 
+                          scale_color_manual(values=c("#c72b2b", "#ab1717", "#913030", "#ba5757"))+ 
+                          geom_text(label=ExtantPalaeognathae$Family, size = 9, hjust=10, vjust=5, fontface = 3)+ 
+                          #geom_label_repel(aes(label = ExtantPalaeognathae$Data.names), box.padding = 0.35, point.padding = 0.5, segment.color = 'grey50')+
+                          geom_smooth(method = "lm", colour = "darkred", se = FALSE)+ 
+                          stat_regline_equation(label.x=1.2, label.y=5)+ 
+                          stat_cor(label.x=1.2, label.y=4.5)+ 
+                          theme_bw() + 
+                          labs(y = "Body Mass log10", x ="Centroid size log10")+
+                          theme(axis.text.x = element_text(size = 9), 
+                                axis.text.y = element_text(size = 9),
+                                axis.title = element_text(size = 10, face = "plain"),
+                                panel.grid = element_blank(), 
+                                legend.text = element_text(size = 10))
+      #view
+      AllometryPalaeognathae
+  
+  
+#Subset Dromornithidae
+  Dromornithidae <- c("Dromornis_planei", "Dromornis_stirtoni", "Genyornis_newtoni", "Ilbandornis_woodburnei", "Barawertornis_tedfordi")       
+      #Create Matrix with only extant Dromornithidae
+      ExtantDromornithidae <- MetaData[Dromornithidae , ]
+      
+#Create Dromornithidae chart
+  AllometryDromornithidae <- ggplot(ExtantDromornithidae, aes(x = ExtantDromornithidae$Centroid.size.L, y = ExtantDromornithidae$Body.Mass.log))+ 
+                          geom_point(size = 2, shape = 16, aes(colour = Family))+ 
+                          scale_color_manual(values=c("#e0a43d"))+ 
+                          geom_text(label=ExtantDromornithidae$Family, size = 9,hjust=10, vjust=5, fontface = 3)+
+                          #geom_label_repel(aes(label = ExtantDromornithidae$Data.names), box.padding = 0.35, point.padding = 0.5, segment.color = 'grey50')+
+                          geom_smooth(method = "lm", colour = "darkorange3", se = FALSE)+ 
+                          stat_regline_equation(label.x=1.2, label.y=5.7)+ 
+                          stat_cor(label.x=1.2, label.y=5.5)+ 
+                          theme_bw() + 
+                          labs(y = "Body Mass log10", x ="Centroid size log10")+
+                          theme(axis.text.x = element_text(size = 9), 
+                                axis.text.y = element_text(size = 9),
+                                axis.title = element_text(size = 10, face = "plain"),
+                                panel.grid = element_blank(), 
+                                legend.text = element_text(size = 10))
+      #view
+      AllometryDromornithidae
+
+      
+#View all plots together
+ggarrange(AllometryDromornithidae, AllometryAnseriformes, AllometryGalliformes, AllometryPalaeognathae, 
+          labels = c("A", "B", "C"),
+          ncol = 2, nrow = 2, align = "v")
+
+```
+
+```{r Relative centroid size to body mass}
+
+RealtiveCsizePlot <- ggplot(MetaData, aes(x = MetaData$RelativeCsize, y = MetaData$Body.Mass.log))+ 
+  geom_point(size = 2, shape = 16, aes(colour = Family)) +
+  scale_color_manual(values=c("Anhimidae" = "#405fa3",
+                              "Anseranatidae" = "#232d66",
+                              "Anatidae" = "#86a0d3",
+                              "Casuariidae" = "#c72b2b", 
+                              "Cracidae" = "#668a73",
+                              "Dromaiidae" = "#ab1717", 
+                              "Dromornithidae" = "#e0a43d", 
+                              "Megapodiidae" = "#425c4d", 
+                              "Numididae" = "#80ad8f", 
+                              "Odontophoridae" = "#9ab3a3", 
+                              "Phasianidae" = "#8adba3", 
+                              "Rheidae" = "#913030", 
+                              "Sylviornithidae" = "#059e24", 
+                              "Tinamidae" = "#ba5757")) +
+  geom_text(label=MetaData$Family, size = 9, hjust=10, vjust=5, fontface = 3) +  
+  geom_label_repel(aes(label = rownames(MetaData)), box.padding = 0.35, point.padding = 0.5, segment.color = 'grey50', max.overlaps = 30)+
+        # ^ Adds in labels for each of the taxa
+  theme_bw() +
+  labs(y = "Log Body Mass", x ="Log Relative Centroid Size") +
+  #Modify the labels for each of the axes
+  theme(axis.text.x = element_text(size = 9),                                               
+        axis.text.y = element_text(size = 9),
+        axis.title = element_text(size = 10, face = "plain"),
+        #Remove the background grid lines
+        panel.grid = element_blank(),
+        #Settings for the legend text
+        legend.text = element_text(size = 9),
+        legend.title = element_text(size = 10)) +                                             
+  #Add in regression equation, line of best fit, and confidence interval (se = TRUE)
+  geom_smooth(method = "lm", colour = "black", se = TRUE) + 
+      stat_regline_equation(label.x=-2.2, label.y=5.2)+
+      stat_cor(label.x=-2.2, label.y=5)
+
+RealtiveCsizePlot
+
+```
+
+
+#ANOVAs
+```{r ANOVA- Data organisation}
+
+#Organise the data
+
+shape <- Superposed.Lms$coords[ , , MetaData$Data.names ]
+
+#Create a geomorph data frame with the variables wanting to be tested
+gdf <- geomorph.data.frame(MetaData,
+                           #Include shape data
+                           shape = shape,
+                           #Include the phylogeny in the data frame
+                           phy = Tree)
+
+#Check that the class is geomorph.data.frame
+class(gdf)
+
+
+#Create subsets of the data frame for analysis without NAs
+
+#Remove Dormornithidae
+    #Create a MetaData subset
+    NonDrom_MetaData <- MetaData %>% filter(MetaData$Family != "Dromornithidae")
+    #Create a shape subset
+    shape_NonDrom <- Superposed.Lms$coords[ , , NonDrom_MetaData$Data.names]
+    #Remove Dromornithids from the tree
+        #Create a list of species to remove
+        tip_NonDrom <- c("Genyornis_newtoni", "Dromornis_stirtoni", "Dromornis_planei", "Ilbandornis_woodburnei", "Barawertornis_tedfordi")
+        #Trim the tree, make sure to have trim.internal = TRUE or else it just leaves NAs in place of removed clades
+        Tree_NonDrom <- drop.tip(Tree, tip_NonDrom, trim.internal = TRUE)
+        #Plot the tree to check it has worked
+        plot(Tree_NonDrom)
+    #Create the gdf dataset            
+    NonDromgdf <- geomorph.data.frame(NonDrom_MetaData,
+                           shape = shape_NonDrom,
+                           phy = Tree_NonDrom)
+    
+#Remove NAs from Brain Data Variables
+    BrainNA_MetaData <- MetaData %>% filter(MetaData$Endosurface.log != "NA")
+    shape_BrainNA <- Superposed.Lms$coords[ , , BrainNA_MetaData$Data.names]
+        tip_BrainNA <- c("Perdix_perdix", "Pavo_muticus", "Mitu_mitu", "Lagopus_lagopus", "Callipepla_californica", "Coturnix_japonica", "Barawertornis_tedfordi", "Dromornis_stirtoni", "Genyornis_newtoni", "Melanitta_perspicillata", "Chauna_chavaria")
+        Tree_BrainNA <- drop.tip(Tree, tip_BrainNA, trim.internal = TRUE)
+        plot(Tree_BrainNA)
+    BrainNAgdf <- geomorph.data.frame(BrainNA_MetaData,
+                           shape = shape_BrainNA,
+                           phy = Tree_BrainNA)
+
+    
+#Anseriformes
+    Anseriform_MetaData <- MetaData %>% filter(MetaData$HigherTaxonomy == "Anseriformes")
+    shape_Anseriform <- Superposed.Lms$coords[ , , Anseriform_MetaData$Data.names]
+      tip_Anseriform <- c("Barawertornis_tedfordi", "Dromornis_planei", "Dromornis_stirtoni", "Genyornis_newtoni", "Ilbandornis_woodburnei", "Acryllium_vulturinum", "Alectura_lathami", "Callipepla_californica", "Coturnix_japonica", "Gallus_gallus", "Lagopus_lagopus", "Leipoa_ocellata", "Megapodius_reinwardt", "Mitu_mitu", "Ortalis_vetula", "Pavo_muticus", "Perdix_perdix", "Sylviornis_neocaledoniae", "Talegalla_fuscirostris", "Casuarius_casuarius", "Crypturellus_obsoletus", "Dromaius_novaehollandiae", "Rhea_americana", "Rhynchotus_rufescens")
+      Tree_Anseriform <- drop.tip(Tree, tip_Anseriform, trim.internal = TRUE)
+        plot(Tree_Anseriform)
+    Anseriformgdf <- geomorph.data.frame(Anseriform_MetaData, 
+                                         shape = shape_Anseriform,
+                                         phy = Tree_Anseriform)
+
+#Anatidae
+   Anatid_MetaData <- MetaData %>% filter(MetaData$Family == "Anatidae")
+    shape_Anatid <- Superposed.Lms$coords[ , , Anatid_MetaData$Data.names]
+      tip_Anatid <- c("Barawertornis_tedfordi", "Dromornis_planei", "Dromornis_stirtoni", "Genyornis_newtoni", "Ilbandornis_woodburnei", "Acryllium_vulturinum", "Alectura_lathami", "Anseranas_semipalmata", "Anhima_cornuta", "Chauna_chavaria", "Callipepla_californica", "Coturnix_japonica", "Gallus_gallus", "Lagopus_lagopus", "Leipoa_ocellata", "Megapodius_reinwardt", "Mitu_mitu", "Ortalis_vetula", "Pavo_muticus", "Perdix_perdix", "Sylviornis_neocaledoniae", "Talegalla_fuscirostris", "Casuarius_casuarius", "Crypturellus_obsoletus", "Dromaius_novaehollandiae", "Rhea_americana", "Rhynchotus_rufescens")
+      Tree_Anatid <- drop.tip(Tree, tip_Anatid, trim.internal = TRUE)
+        plot(Tree_Anatid)
+    Anatidgdf <- geomorph.data.frame(Anatid_MetaData, 
+                                         shape = shape_Anatid,
+                                         phy = Tree_Anatid)
+#Phasianidae
+   Phasianid_MetaData <- MetaData %>% filter(MetaData$Family == "Phasianidae")
+    shape_Phasianid <- Superposed.Lms$coords[ , , Phasianid_MetaData$Data.names]
+      tip_Phasianid <- c("Barawertornis_tedfordi", "Dromornis_planei", "Dromornis_stirtoni", "Genyornis_newtoni", "Ilbandornis_woodburnei", "Casuarius_casuarius", "Crypturellus_obsoletus", "Dromaius_novaehollandiae", "Rhea_americana", "Rhynchotus_rufescens", "Anhima_cornuta", "Anseranas_semipalmata", "Dendrocygna_bicolor", "Mionetta_blanchardi", "Oxyura_australis", "Bizura_lobata", "Stictonetta_naevosa", "Malachorynchus_membranaceus", "Cereopsis_novaehollandiae", "Cygnus_atratus", "Branta_canadensis", "Anser_caerulescens", "Tadorna_tadornoides", "Chenonetta_jubata", "Chenonetta_finschi", "Nettapus_pulchellus", "Anas_supercilliosa", "Aythya_australis", "Melanitta_perspicillata", "Lophodytes_cucullatus", "Alectura_lathami", "Leipoa_ocellata", "Megapodius_reinwardt", "Talegalla_fuscirostris", "Ortalis_vetula", "Mitu_mitu", "Acryllium_vulturinum", "Callipepla_californica", "Chauna_chavaria", "Sylviornis_neocaledoniae")
+      Tree_Phasianid <- drop.tip(Tree, tip_Phasianid, trim.internal = TRUE)
+        plot(Tree_Phasianid)
+   Phasianidgdf <- geomorph.data.frame(Phasianid_MetaData, 
+                                         shape = shape_Phasianid,
+                                         phy = Tree_Phasianid)
+    
+   
+#Remove Cygnus
+      noncyg_MetaData <- MetaData %>% filter(MetaData$Data.names != "Cygnus_atratus")
+    shape_noncyg <- Superposed.Lms$coords[ , , noncyg_MetaData$Data.names]
+      tip_noncyg <- c("Cygnus_atratus")
+      Tree_noncyg <- drop.tip(Tree, tip_noncyg, trim.internal = TRUE)
+        plot(Tree_noncyg)
+   noncyggdf <- geomorph.data.frame(noncyg_MetaData, 
+                                         shape = shape_noncyg,
+                                         phy = Tree_noncyg)
+   
+```
+
+```{r ANOVAs}
+
+VariableInteractions <- list()
+
+  VariableInteractions[[ 1 ]] <- summary(procD.pgls(f1=Body.Mass.log ~ Family, data = gdf, iter = 999, phy = phy))
+  VariableInteractions[[ 2 ]] <- summary(procD.pgls(f1=Skull.AspectRatio.log ~ Body.Mass.log * HigherTaxonomy, data = gdf, iter = 999, phy = phy, SS.type = "II"))
+  VariableInteractions[[ 3 ]] <- summary(procD.pgls(f1=Body.Mass.log ~ PostRostral.Cranium.length, data = gdf, iter = 999, phy = phy))
+  VariableInteractions[[ 4 ]] <- summary(procD.pgls(f1=PostRostral.Cranium.length ~ Body.Mass.log, data = gdf, iter = 999, phy = phy))
+  
+CentroidSize <- list()
+
+  CentroidSize[[ 1 ]] <- summary( procD.pgls(f1=Centroid.size.L ~ Flight * Family, phy = phy, data = NonDromgdf, iter = 1000, SS.type = "II") )   
+  CentroidSize[[ 2 ]] <- summary( procD.pgls(f1=Centroid.size.L ~ Body.Mass.log , phy = phy, data = gdf, iter = 1000, SS.type = "I") )
+  CentroidSize[[ 3 ]] <- summary( procD.pgls(f1=Centroid.size.L ~ Flight * Body.Mass.log , phy = phy, data = gdf, iter = 1000, SS.type = "II") )
+  CentroidSize[[ 4 ]] <- summary( procD.pgls(f1=Centroid.size.L ~ Skull.AspectRatio.log , phy = phy, data = gdf, iter = 1000, SS.type = "II") ) 
+  CentroidSize[[ 5 ]] <- summary( procD.pgls(f1=Centroid.size.L ~ PostRostral.Cranium.length , phy = phy, data = gdf, iter = 1000, SS.type = "I") ) 
+  CentroidSize[[ 6 ]] <- summary( procD.pgls(f1=Centroid.size.L ~ Endosurface.log , phy = phy, data = BrainNAgdf, iter = 1000, SS.type = "I") )
+  CentroidSize[[ 7 ]] <- summary( procD.pgls(f1=Centroid.size.L ~ Body.Mass.log * PostRostral.Cranium.length , phy = phy, data = gdf, iter = 1000, SS.type = "II") )
+
+InnerEarShape <- list()
+   
+  InnerEarShape[[ 1 ]] <- summary(procD.pgls(f1=shape ~ Centroid.size.L * Body.Mass.log, phy = phy , data = gdf , SS.type = "I", iter = 1000))
+  InnerEarShape[[ 2 ]] <- summary(procD.pgls(f1=shape ~ Endosurface.log , phy = phy , data = BrainNAgdf , SS.type = "I", iter = 1000))
+  InnerEarShape[[ 3 ]] <- summary(procD.pgls(f1=shape ~ Centroid.size.L * Family , phy = phy, data = gdf, SS.type = "I", iter = 1000))
+  InnerEarShape[[ 4 ]] <- summary(procD.pgls(f1=shape ~ Body.Mass.dis + Flight + Family , phy = phy, data = gdf, SS.type = "II", iter = 1000))   
+  InnerEarShape[[ 5 ]] <- summary(procD.pgls(f1=shape ~ Diet, phy = phy, data = NonDromgdf, SS.type = "I", iter = 1000))    
+  InnerEarShape[[ 6 ]] <- summary(procD.pgls(f1=shape ~ Skull.AspectRatio.log , phy = phy, data = BrainNAgdf, SS.type = "I", iter = 1000))
+  InnerEarShape[[ 7 ]] <- summary(procD.pgls(f1=shape ~ PostRostral.Cranium.length * Centroid.size.L, phy = phy, data = gdf, SS.type = "I", iter = 1000))
+  InnerEarShape[[ 8 ]] <- summary(procD.pgls(f1=shape ~ PostRostral.Cranium.Dis  * Centroid.size.L, phy = phy, data = gdf, SS.type = "I", iter = 1000))
+  InnerEarShape[[ 9 ]] <- summary(procD.pgls(f1=shape ~ CC.Width.log.dis * CC.Height.log.dis , phy = phy, data = gdf, SS.type = "II", iter = 1000))
+  InnerEarShape[[ 10 ]] <- summary(procD.pgls(f1=shape ~ Skull.AspectRatio.log * Endosurface.log, phy = phy, data = BrainNAgdf, SS.type = "I", iter = 1000)) 
+  InnerEarShape[[ 11 ]] <- summary(procD.pgls(f1=shape ~ RelativeCsize, phy = phy, data = BrainNAgdf, SS.type = "I", iter = 1000)) 
+  
+```
+
+```{r Post-rostral skull length allometry}
+
+Postrostral_MetaData <- MetaData %>% filter(MetaData$PostRostral.Cranium.length != "NA")
+
+PostrostralPlot <- ggplot(Postrostral_MetaData, aes(x = Postrostral_MetaData$Centroid.size.L, y = Postrostral_MetaData$PostRostral.Cranium.length))+ 
+  geom_point(size = 2, shape = 16, aes(colour = Family)) +
+  scale_color_manual(values=c("Anhimidae" = "#405fa3",
+                              "Anseranatidae" = "#232d66",
+                              "Anatidae" = "#86a0d3",
+                              "Casuariidae" = "#c72b2b", 
+                              "Cracidae" = "#668a73",
+                              "Dromaiidae" = "#ab1717", 
+                              "Dromornithidae" = "#e0a43d", 
+                              "Megapodiidae" = "#425c4d", 
+                              "Numididae" = "#80ad8f", 
+                              "Odontophoridae" = "#9ab3a3", 
+                              "Phasianidae" = "#8adba3", 
+                              "Rheidae" = "#913030", 
+                              "Sylviornithidae" = "#059e24", 
+                              "Tinamidae" = "#ba5757")) +
+  geom_text(label=Postrostral_MetaData$Family, size = 9, hjust=10, vjust=5, fontface = 3) +  
+  theme_bw() +
+  geom_label_repel(aes(label = rownames(Postrostral_MetaData)), box.padding = 0.35, point.padding = 0.5, segment.color = 'grey50', max.overlaps = 10)+
+  labs(y = "Log Body Mass", x ="Centroid Size")+
+  theme(axis.text.x = element_text(size = 9),                                               
+        axis.text.y = element_text(size = 9),
+        axis.title = element_text(size = 10, face = "plain"),
+        panel.grid = element_blank(),
+        legend.text = element_text(size = 9),
+        legend.title = element_text(size = 10)) +                                             
+  geom_smooth(method = "lm", colour = "black", se = TRUE) + 
+      stat_regline_equation(label.x=1.2, label.y=2) +
+      stat_cor(label.x=1.2, label.y=1.95)
+
+#Add in prediction intervals
+  #With all taxa
+    model3 <- lm(PostRostral.Cranium.length ~ Centroid.size.L, data = Postrostral_MetaData)
+    summary(model3)
+      predict3 <- predict(model3, interval = "prediction")
+      predict3_df <- cbind(Postrostral_MetaData, predict3)
+
+#Add to graph
+      PRAllometry <- PostrostralPlot +
+          geom_line(data = predict3_df, aes(y=lwr), linetype = "dashed", colour = "black")+
+          geom_line(data = predict3_df, aes(y=upr), linetype = "dashed", colour = "black")
+
+#View the plot for checking and export
+PRAllometry
+
+```
+
+
+```{r Post-rostral skull length allometry- Anseriformes only}
+
+PRAnseriform_MetaData <- Anseriform_MetaData %>% filter(Anseriform_MetaData$PostRostral.Cranium.length != "NA")
+
+PRAnseriformPlot <- ggplot(PRAnseriform_MetaData, aes(x = PRAnseriform_MetaData$Centroid.size.L, y = PRAnseriform_MetaData$PostRostral.Cranium.length))+ 
+  geom_point(size = 4, shape = 16, aes(colour = Aquatic.feeding)) +
+  scale_color_manual(values=c("No" = "#425c4d",
+                              "Partial" = "#9ab3a3",
+                              "Yes" = "#405fa3")) +
+  geom_text(label=PRAnseriform_MetaData$Family, size = 9, hjust=10, vjust=5, fontface = 3) +  
+  theme_bw() +
+  geom_label_repel(aes(label = rownames(PRAnseriform_MetaData)), box.padding = 0.35, point.padding = 0.5, segment.color = 'grey50', max.overlaps = 10)+
+  labs(y = "Log Post-rostral skull length", x ="Log centroid size")+
+  theme(axis.text.x = element_text(size = 9),                                               
+        axis.text.y = element_text(size = 9),
+        axis.title = element_text(size = 10, face = "plain"),
+        panel.grid = element_blank(),
+        legend.text = element_text(size = 9),
+        legend.title = element_text(size = 10)) +                                             
+  geom_smooth(method = "lm", colour = "black", se = TRUE) + 
+      stat_regline_equation(label.x=1.2, label.y=1.85) +
+      stat_cor(label.x=1.2, label.y=1.83)
+
+#Add in prediction intervals
+  #With all taxa
+    model3 <- lm(PostRostral.Cranium.length ~ Centroid.size.L, data = PRAnseriform_MetaData)
+    summary(model3)
+      predict3 <- predict(model3, interval = "prediction")
+      predict3_df <- cbind(PRAnseriform_MetaData, predict3)
+
+#Add to graph
+      PRAnseriformPlot1 <- PRAnseriformPlot +
+          geom_line(data = predict3_df, aes(y=lwr), linetype = "dashed", colour = "black")+
+          geom_line(data = predict3_df, aes(y=upr), linetype = "dashed", colour = "black")
+
+#View the plot for checking and export
+PRAnseriformPlot1
+
+```
+
+
+
+#PCA
+```{r PCA}
+
+#Run the PCA
+    #View a summary of the data
+    #Extract the components results to a new data matrix to make it easier to plot
+
+#PCA- Phylogenetic Transformed PCA produces a PCA independent of phylogeny
+PCA.PhyloT <- gm.prcomp(Superposed.Lms$coords, phy = Tree, transform = TRUE)
+    summary(PCA.PhyloT)
+    PCA.Phylot.Components <- data.frame(PCA.PhyloT$x)
+
+#PACA- Assess phylogenetic signal in shape with aligned PACA. A PACA is conducted within this analysis.
+physignal.shape <- physignal(Superposed.Lms$coords, phy = Tree, iter = 10000)
+    #summary of phy.signal
+    summary(physignal.shape)
+          #plot phy.signal
+          plot(physignal.shape)
+    #Summary of PACA
+    summary(physignal.shape$PACA)
+          #Extract PACA results for plotting
+          PACA.Phylo.Components <- data.frame(physignal.shape$PACA$x)
+
+    
+#Plot K by P values
+#VW  The physignal function has a PACA under its bonnet. The k.by.p gives cumulative phylogenetic signals K for component 1:p, p being DIMENSIONS not p values. Because PACA maximises phylogenetic signal, the first few components contribute to high phylo signal but any comps afterwards reduce the cumulative phylogenetic signal. So the plot below shows how the first couple of PACs are high signal (as they should be), but adding more variation just reduces the signal.
+plot(physignal.shape$K.by.p, type = "l", main = "PACA K value distributions", xlab = "Components", ylab = "Phylogenetic signal: K by p")
+
+```
+
+```{r Phylogenetic signal in size}
+
+#Assess phylogenetic signal in size
+
+  #Dromornithids sister to Anhimids (as per McInerney et al. 2023)
+  physignal.size <- physignal(Superposed.Lms$Csize, phy = Tree, iter = 10000)
+    summary(physignal.size)
+    plot(physignal.size)
+
+  #I cannot get physignal.z to work, keep getting the error: 
+          #Error in lm.fit(Pcov %*% u, Pcov %*% y) : INTEGER() can only be applied to a 'integer', not a 'NULL'
+      #physignal.z(log(Superposed.Lms$Csize), phy = Tree, lambda = "burn", iter = 999)
+    
+```

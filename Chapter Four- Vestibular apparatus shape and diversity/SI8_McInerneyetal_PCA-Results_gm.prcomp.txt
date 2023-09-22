@@ -1,0 +1,385 @@
+11.0.01PRINCIPAL COMPONENTS ANALYSES [GM.PRCOMP()] RESULTS
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+#TRADITIONAL PCA
+	#Call: PCA.Traditional <- gm.prcomp(Superposed.Lms$coords)
+	
+	#Summary
+	
+		Ordination type: Principal Component Analysis 
+		Centering by OLS mean
+		Orthogonal projection of OLS residuals
+		Number of observations: 45 
+		Number of vectors 44 
+
+		Importance of Components:
+											Comp1       Comp2       Comp3       Comp4        Comp5        Comp6        Comp7
+				Eigenvalues            0.01018836 0.002482226 0.001710781 0.001396146 0.0008309248 0.0008068646 0.0006138536
+				Proportion of Variance 0.46954431 0.114396702 0.078843641 0.064343266 0.0382942842 0.0371854358 0.0282902663
+				Cumulative Proportion  0.46954431 0.583941016 0.662784657 0.727127923 0.7654222070 0.8026076429 0.8308979092
+											  Comp8        Comp9      Comp10       Comp11       Comp12       Comp13
+				Eigenvalues            0.0005230471 0.0005004313 0.000360478 0.0003195875 0.0002695421 0.0002370289
+				Proportion of Variance 0.0241053275 0.0230630466 0.016613113 0.0147286186 0.0124222083 0.0109237958
+				Cumulative Proportion  0.8550032366 0.8780662832 0.894679396 0.9094080147 0.9218302230 0.9327540188
+											 Comp14       Comp15       Comp16       Comp17       Comp18       Comp19
+				Eigenvalues            0.0001609826 0.0001440897 0.0001345434 0.0001101075 0.0001058954 9.449891e-05
+				Proportion of Variance 0.0074190984 0.0066405683 0.0062006150 0.0050744498 0.0048803337 4.355109e-03
+				Cumulative Proportion  0.9401731172 0.9468136855 0.9530143005 0.9580887503 0.9629690840 9.673242e-01
+											 Comp20       Comp21       Comp22       Comp23       Comp24       Comp25
+				Eigenvalues            8.265091e-05 7.757916e-05 0.0000669869 0.0000596348 0.0000542178 5.168423e-05
+				Proportion of Variance 3.809078e-03 3.575340e-03 0.0030871810 0.0027483500 0.0024987003 2.381937e-03
+				Cumulative Proportion  9.711333e-01 9.747086e-01 0.9777957920 0.9805441420 0.9830428423 9.854248e-01
+											 Comp26       Comp27       Comp28       Comp29       Comp30       Comp31
+				Eigenvalues            4.359769e-05 3.869342e-05 3.651455e-05 2.998534e-05 2.786292e-05 2.269578e-05
+				Proportion of Variance 2.009258e-03 1.783238e-03 1.682822e-03 1.381915e-03 1.284100e-03 1.045966e-03
+				Cumulative Proportion  9.874340e-01 9.892173e-01 9.909001e-01 9.922820e-01 9.935661e-01 9.946121e-01
+											 Comp32       Comp33       Comp34       Comp35       Comp36       Comp37
+				Eigenvalues            1.993025e-05 1.489596e-05 1.350664e-05 1.080209e-05 9.929349e-06 9.250452e-06
+				Proportion of Variance 9.185125e-04 6.865004e-04 6.224716e-04 4.978286e-04 4.576074e-04 4.263195e-04
+				Cumulative Proportion  9.955306e-01 9.962171e-01 9.968396e-01 9.973374e-01 9.977950e-01 9.982213e-01
+											 Comp38       Comp39       Comp40       Comp41       Comp42       Comp43
+				Eigenvalues            8.442398e-06 6.504222e-06 6.345783e-06 5.269658e-06 4.482479e-06 4.029445e-06
+				Proportion of Variance 3.890793e-04 2.997558e-04 2.924539e-04 2.428593e-04 2.065810e-04 1.857024e-04
+				Cumulative Proportion  9.986104e-01 9.989102e-01 9.992026e-01 9.994455e-01 9.996520e-01 9.998378e-01
+											 Comp44
+				Eigenvalues            3.520565e-06
+				Proportion of Variance 1.622500e-04
+				Cumulative Proportion  1.000000e+00
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#PHYLOGENETIC TRANSFORMED PCA- ALIGNS COMPONENTS TO THOSE MOST INDEPENDENT OF PHYLOGENY
+	#Call: PCA.PhyloT <- gm.prcomp(Superposed.Lms$coords, phy = Tree, transform = TRUE)
+	
+	#Summary
+	
+		Ordination type: Principal Component Analysis 
+		Centering by OLS mean
+		Orthogonal projection of OLS residuals
+		Number of observations: 45 
+		Number of vectors 44 
+
+		Importance of Components:
+											Comp1       Comp2       Comp3       Comp4        Comp5        Comp6        Comp7
+				Eigenvalues            0.01018836 0.002482226 0.001710781 0.001396146 0.0008309248 0.0008068646 0.0006138536
+				Proportion of Variance 0.46954431 0.114396702 0.078843641 0.064343266 0.0382942842 0.0371854358 0.0282902663
+				Cumulative Proportion  0.46954431 0.583941016 0.662784657 0.727127923 0.7654222070 0.8026076429 0.8308979092
+											  Comp8        Comp9      Comp10       Comp11       Comp12       Comp13
+				Eigenvalues            0.0005230471 0.0005004313 0.000360478 0.0003195875 0.0002695421 0.0002370289
+				Proportion of Variance 0.0241053275 0.0230630466 0.016613113 0.0147286186 0.0124222083 0.0109237958
+				Cumulative Proportion  0.8550032366 0.8780662832 0.894679396 0.9094080147 0.9218302230 0.9327540188
+											 Comp14       Comp15       Comp16       Comp17       Comp18       Comp19
+				Eigenvalues            0.0001609826 0.0001440897 0.0001345434 0.0001101075 0.0001058954 9.449891e-05
+				Proportion of Variance 0.0074190984 0.0066405683 0.0062006150 0.0050744498 0.0048803337 4.355109e-03
+				Cumulative Proportion  0.9401731172 0.9468136855 0.9530143005 0.9580887503 0.9629690840 9.673242e-01
+											 Comp20       Comp21       Comp22       Comp23       Comp24       Comp25
+				Eigenvalues            8.265091e-05 7.757916e-05 0.0000669869 0.0000596348 0.0000542178 5.168423e-05
+				Proportion of Variance 3.809078e-03 3.575340e-03 0.0030871810 0.0027483500 0.0024987003 2.381937e-03
+				Cumulative Proportion  9.711333e-01 9.747086e-01 0.9777957920 0.9805441420 0.9830428423 9.854248e-01
+											 Comp26       Comp27       Comp28       Comp29       Comp30       Comp31
+				Eigenvalues            4.359769e-05 3.869342e-05 3.651455e-05 2.998534e-05 2.786292e-05 2.269578e-05
+				Proportion of Variance 2.009258e-03 1.783238e-03 1.682822e-03 1.381915e-03 1.284100e-03 1.045966e-03
+				Cumulative Proportion  9.874340e-01 9.892173e-01 9.909001e-01 9.922820e-01 9.935661e-01 9.946121e-01
+											 Comp32       Comp33       Comp34       Comp35       Comp36       Comp37
+				Eigenvalues            1.993025e-05 1.489596e-05 1.350664e-05 1.080209e-05 9.929349e-06 9.250452e-06
+				Proportion of Variance 9.185125e-04 6.865004e-04 6.224716e-04 4.978286e-04 4.576074e-04 4.263195e-04
+				Cumulative Proportion  9.955306e-01 9.962171e-01 9.968396e-01 9.973374e-01 9.977950e-01 9.982213e-01
+											 Comp38       Comp39       Comp40       Comp41       Comp42       Comp43
+				Eigenvalues            8.442398e-06 6.504222e-06 6.345783e-06 5.269658e-06 4.482479e-06 4.029445e-06
+				Proportion of Variance 3.890793e-04 2.997558e-04 2.924539e-04 2.428593e-04 2.065810e-04 1.857024e-04
+				Cumulative Proportion  9.986104e-01 9.989102e-01 9.992026e-01 9.994455e-01 9.996520e-01 9.998378e-01
+											 Comp44
+				Eigenvalues            3.520565e-06
+				Proportion of Variance 1.622500e-04
+				Cumulative Proportion  1.000000e+00
+
+
+		Dispersion (variance) of points, after projection:
+													  Comp1       Comp2        Comp3        Comp4        Comp5        Comp6
+				Tips Dispersion                 0.010188362 0.002482226 0.0017107811 0.0013961461 0.0008309248 0.0008068646
+				Proportion Tips Dispersion      0.469544313 0.114396702 0.0788436410 0.0643432660 0.0382942842 0.0371854358
+				Cumulative Tips Dispersion      0.469544313 0.583941016 0.6627846568 0.7271279228 0.7654222070 0.8026076429
+				Ancestors Dispersion            0.006792747 0.001511668 0.0004491851 0.0003576129 0.0002022796 0.0002355843
+				Proportion Ancestors Dispersion 0.642425964 0.142966418 0.0424818115 0.0338213379 0.0191306478 0.0222804472
+				Cumulative Ancestors Dispersion 0.642425964 0.785392382 0.8278741938 0.8616955317 0.8808261795 0.9031066267
+													   Comp7        Comp8        Comp9       Comp10       Comp11       Comp12
+				Tips Dispersion                 0.0006138536 0.0005230471 0.0005004313 0.0003604780 3.195875e-04 2.695421e-04
+				Proportion Tips Dispersion      0.0282902663 0.0241053275 0.0230630466 0.0166131129 1.472862e-02 1.242221e-02
+				Cumulative Tips Dispersion      0.8308979092 0.8550032366 0.8780662832 0.8946793961 9.094080e-01 9.218302e-01
+				Ancestors Dispersion            0.0001865147 0.0001513426 0.0001290866 0.0001295288 5.672564e-05 3.934192e-05
+				Proportion Ancestors Dispersion 0.0176396770 0.0143132658 0.0122084049 0.0122502219 5.364843e-03 3.720773e-03
+				Cumulative Ancestors Dispersion 0.9207463037 0.9350595695 0.9472679744 0.9595181963 9.648830e-01 9.686038e-01
+													  Comp13       Comp14       Comp15       Comp16       Comp17       Comp18
+				Tips Dispersion                 2.370289e-04 1.609826e-04 0.0001440897 1.345434e-04 1.101075e-04 0.0001058954
+				Proportion Tips Dispersion      1.092380e-02 7.419098e-03 0.0066405683 6.200615e-03 5.074450e-03 0.0048803337
+				Cumulative Tips Dispersion      9.327540e-01 9.401731e-01 0.9468136855 9.530143e-01 9.580888e-01 0.9629690840
+				Ancestors Dispersion            4.945527e-05 3.410751e-05 0.0000327805 3.428721e-05 1.606748e-05 0.0000259736
+				Proportion Ancestors Dispersion 4.677246e-03 3.225728e-03 0.0031002247 3.242722e-03 1.519587e-03 0.0024564602
+				Cumulative Ancestors Dispersion 9.732811e-01 9.765068e-01 0.9796070109 9.828497e-01 9.843693e-01 0.9868257803
+													  Comp19       Comp20       Comp21       Comp22       Comp23       Comp24
+				Tips Dispersion                 9.449891e-05 8.265091e-05 7.757916e-05 6.698690e-05 5.963480e-05 5.421780e-05
+				Proportion Tips Dispersion      4.355109e-03 3.809078e-03 3.575340e-03 3.087181e-03 2.748350e-03 2.498700e-03
+				Cumulative Tips Dispersion      9.673242e-01 9.711333e-01 9.747086e-01 9.777958e-01 9.805441e-01 9.830428e-01
+				Ancestors Dispersion            1.476268e-05 1.838993e-05 7.693230e-06 1.509703e-05 8.241046e-06 6.707338e-06
+				Proportion Ancestors Dispersion 1.396185e-03 1.739233e-03 7.275894e-04 1.427806e-03 7.793993e-04 6.343484e-04
+				Cumulative Ancestors Dispersion 9.882220e-01 9.899612e-01 9.906888e-01 9.921166e-01 9.928960e-01 9.935303e-01
+													  Comp25       Comp26       Comp27       Comp28       Comp29       Comp30
+				Tips Dispersion                 5.168423e-05 4.359769e-05 3.869342e-05 3.651455e-05 2.998534e-05 2.786292e-05
+				Proportion Tips Dispersion      2.381937e-03 2.009258e-03 1.783238e-03 1.682822e-03 1.381915e-03 1.284100e-03
+				Cumulative Tips Dispersion      9.854248e-01 9.874340e-01 9.892173e-01 9.909001e-01 9.922820e-01 9.935661e-01
+				Ancestors Dispersion            7.332039e-06 7.858940e-06 8.773783e-06 7.260157e-06 4.338540e-06 4.348070e-06
+				Proportion Ancestors Dispersion 6.934297e-04 7.432614e-04 8.297830e-04 6.866314e-04 4.103186e-04 4.112200e-04
+				Cumulative Ancestors Dispersion 9.942238e-01 9.949670e-01 9.957968e-01 9.964834e-01 9.968938e-01 9.973050e-01
+													  Comp31       Comp32       Comp33       Comp34       Comp35       Comp36
+				Tips Dispersion                 2.269578e-05 1.993025e-05 1.489596e-05 1.350664e-05 1.080209e-05 9.929349e-06
+				Proportion Tips Dispersion      1.045966e-03 9.185125e-04 6.865004e-04 6.224716e-04 4.978286e-04 4.576074e-04
+				Cumulative Tips Dispersion      9.946121e-01 9.955306e-01 9.962171e-01 9.968396e-01 9.973374e-01 9.977950e-01
+				Ancestors Dispersion            4.997785e-06 4.866400e-06 3.480009e-06 2.748207e-06 1.802384e-06 1.696327e-06
+				Proportion Ancestors Dispersion 4.726669e-04 4.602412e-04 3.291229e-04 2.599124e-04 1.704609e-04 1.604306e-04
+				Cumulative Ancestors Dispersion 9.977777e-01 9.982379e-01 9.985670e-01 9.988269e-01 9.989974e-01 9.991578e-01
+													  Comp37       Comp38       Comp39       Comp40       Comp41       Comp42
+				Tips Dispersion                 9.250452e-06 8.442398e-06 6.504222e-06 6.345783e-06 5.269658e-06 4.482479e-06
+				Proportion Tips Dispersion      4.263195e-04 3.890793e-04 2.997558e-04 2.924539e-04 2.428593e-04 2.065810e-04
+				Cumulative Tips Dispersion      9.982213e-01 9.986104e-01 9.989102e-01 9.992026e-01 9.994455e-01 9.996520e-01
+				Ancestors Dispersion            1.378901e-06 2.021088e-06 9.021670e-07 7.839075e-07 1.225363e-06 9.408710e-07
+				Proportion Ancestors Dispersion 1.304100e-04 1.911450e-04 8.532269e-05 7.413827e-05 1.158890e-04 8.898314e-05
+				Cumulative Ancestors Dispersion 9.992882e-01 9.994794e-01 9.995647e-01 9.996388e-01 9.997547e-01 9.998437e-01
+													  Comp43       Comp44
+				Tips Dispersion                 4.029445e-06 3.520565e-06
+				Proportion Tips Dispersion      1.857024e-04 1.622500e-04
+				Cumulative Tips Dispersion      9.998378e-01 1.000000e+00
+				Ancestors Dispersion            9.963430e-07 6.562209e-07
+				Proportion Ancestors Dispersion 9.422942e-05 6.206227e-05
+				Cumulative Ancestors Dispersion 9.999379e-01 1.000000e+00
+			
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#PACA- ALIGNMENT OF DATA TO PHYLOGENETIC SIGNAL RATHER THAN AXIS OF GREATEST VARIATION
+	#Call: PaCA.Phylo <- gm.prcomp(Superposed.Lms$coords, phy = Tree, align.to.phy = TRUE)
+	
+	#Summary
+	
+		Ordination type: Alignment to an alternative matrix 
+		Alignment matrix: phy 
+		Centering by OLS mean
+		OLS residuals
+		Alignment to  phy means residual projection is not orthogonal.
+		Number of observations: 45 
+		Number of vectors 44 
+
+		Importance of Components:
+											  Comp1       Comp2        Comp3        Comp4        Comp5        Comp6
+				Singular Value           0.01697170 0.004273571 0.0002465256 0.0001037544 5.598369e-05 1.575716e-05
+				Proportion of Covariance 0.78216340 0.196953263 0.0113614648 0.0047816588 2.580083e-03 7.261900e-04
+				Cumulative Proportion    0.78216340 0.979116662 0.9904781270 0.9952597858 9.978399e-01 9.985661e-01
+				RV by Component          0.08878001 0.022355319 0.0012895911 0.0005427456 2.928542e-04 8.242670e-05
+				Cumulative RV            0.08878001 0.111135329 0.1124249197 0.1129676653 1.132605e-01 1.133429e-01
+												Comp7        Comp8        Comp9       Comp10       Comp11       Comp12
+				Singular Value           9.358070e-06 5.470927e-06 3.374201e-06 3.066744e-06 2.384485e-06 1.403843e-06
+				Proportion of Covariance 4.312792e-04 2.521350e-04 1.555046e-04 1.413350e-04 1.098922e-04 6.469799e-05
+				Cumulative Proportion    9.989973e-01 9.992495e-01 9.994050e-01 9.995463e-01 9.996562e-01 9.997209e-01
+				RV by Component          4.895265e-05 2.861876e-05 1.765066e-05 1.604233e-05 1.247339e-05 7.343591e-06
+				Cumulative RV            1.133919e-01 1.134205e-01 1.134382e-01 1.134542e-01 1.134667e-01 1.134740e-01
+											   Comp13       Comp14       Comp15       Comp16       Comp17       Comp18
+				Singular Value           1.110850e-06 9.945247e-07 6.448244e-07 5.716954e-07 5.257759e-07 3.134620e-07
+				Proportion of Covariance 5.119502e-05 4.583401e-05 2.971760e-05 2.634735e-05 2.423109e-05 1.444632e-05
+				Cumulative Proportion    9.997721e-01 9.998179e-01 9.998476e-01 9.998740e-01 9.998982e-01 9.999127e-01
+				RV by Component          5.810927e-06 5.202421e-06 3.373117e-06 2.990575e-06 2.750367e-06 1.639739e-06
+				Cumulative RV            1.134798e-01 1.134850e-01 1.134884e-01 1.134914e-01 1.134942e-01 1.134958e-01
+											   Comp19       Comp20       Comp21       Comp22       Comp23       Comp24
+				Singular Value           2.879078e-07 2.407064e-07 1.801202e-07 1.756501e-07 1.445289e-07 1.258822e-07
+				Proportion of Covariance 1.326862e-05 1.109328e-05 8.301082e-06 8.095072e-06 6.660808e-06 5.801448e-06
+				Cumulative Proportion    9.999259e-01 9.999370e-01 9.999453e-01 9.999534e-01 9.999601e-01 9.999659e-01
+				RV by Component          1.506064e-06 1.259150e-06 9.422202e-07 9.188369e-07 7.560397e-07 6.584975e-07
+				Cumulative RV            1.134973e-01 1.134986e-01 1.134995e-01 1.135004e-01 1.135012e-01 1.135018e-01
+											   Comp25       Comp26       Comp27       Comp28       Comp29       Comp30
+				Singular Value           1.106664e-07 9.732614e-08 7.473806e-08 6.907832e-08 6.386803e-08 5.409274e-08
+				Proportion of Covariance 5.100209e-06 4.485406e-06 3.444404e-06 3.183567e-06 2.943444e-06 2.492937e-06
+				Cumulative Proportion    9.999710e-01 9.999755e-01 9.999789e-01 9.999821e-01 9.999851e-01 9.999875e-01
+				RV by Component          5.789028e-07 5.091191e-07 3.909595e-07 3.613530e-07 3.340977e-07 2.829625e-07
+				Cumulative RV            1.135024e-01 1.135029e-01 1.135033e-01 1.135037e-01 1.135040e-01 1.135043e-01
+											   Comp31       Comp32       Comp33       Comp34       Comp35       Comp36
+				Singular Value           4.290591e-08 4.141386e-08 3.379700e-08 2.929754e-08 2.629739e-08 2.121280e-08
+				Proportion of Covariance 1.977376e-06 1.908613e-06 1.557580e-06 1.350216e-06 1.211950e-06 9.776203e-07
+				Cumulative Proportion    9.999895e-01 9.999914e-01 9.999930e-01 9.999943e-01 9.999956e-01 9.999965e-01
+				RV by Component          2.244435e-07 2.166385e-07 1.767942e-07 1.532573e-07 1.375633e-07 1.109655e-07
+				Cumulative RV            1.135045e-01 1.135047e-01 1.135049e-01 1.135051e-01 1.135052e-01 1.135053e-01
+											   Comp37       Comp38       Comp39       Comp40       Comp41       Comp42
+				Singular Value           1.586989e-08 1.291104e-08 1.002886e-08 9.027198e-09 8.965663e-09 6.681432e-09
+				Proportion of Covariance 7.313852e-07 5.950225e-07 4.621934e-07 4.160305e-07 4.131946e-07 3.079228e-07
+				Cumulative Proportion    9.999973e-01 9.999979e-01 9.999983e-01 9.999987e-01 9.999991e-01 9.999995e-01
+				RV by Component          8.301639e-08 6.753844e-08 5.246159e-08 4.722184e-08 4.689995e-08 3.495099e-08
+				Cumulative RV            1.135054e-01 1.135055e-01 1.135055e-01 1.135056e-01 1.135056e-01 1.135056e-01
+											   Comp43       Comp44
+				Singular Value           6.368580e-09 5.481210e-09
+				Proportion of Covariance 2.935046e-07 2.526089e-07
+				Cumulative Proportion    9.999997e-01 1.000000e+00
+				RV by Component          3.331444e-08 2.867256e-08
+				Cumulative RV            1.135057e-01 1.135057e-01
+
+
+		Dispersion (variance) of points, after projection:
+													  Comp1       Comp2        Comp3        Comp4        Comp5        Comp6
+				Tips Dispersion                 0.006166924 0.006090724 0.0007644649 0.0011347205 0.0008308895 0.0012414159
+				Proportion Tips Dispersion      0.284210983 0.280699206 0.0352313929 0.0522951170 0.0382926594 0.0572123157
+				Cumulative Tips Dispersion      0.284210983 0.564910189 0.6001415818 0.6524366989 0.6907293583 0.7479416740
+				Ancestors Dispersion            0.004330312 0.003999820 0.0003698918 0.0003749617 0.0003328224 0.0003350912
+				Proportion Ancestors Dispersion 0.409540443 0.378284066 0.0349826218 0.0354621098 0.0314767696 0.0316913422
+				Cumulative Ancestors Dispersion 0.409540443 0.787824509 0.8228071311 0.8582692409 0.8897460105 0.9214373527
+													   Comp7        Comp8        Comp9       Comp10       Comp11       Comp12
+				Tips Dispersion                 0.0004483462 0.0006759159 0.0006467610 4.977867e-04 5.074030e-04 2.499585e-04
+				Proportion Tips Dispersion      0.0206626347 0.0311504891 0.0298068497 2.294117e-02 2.338435e-02 1.151967e-02
+				Cumulative Tips Dispersion      0.7686043087 0.7997547978 0.8295616475 8.525028e-01 8.758872e-01 8.874068e-01
+				Ancestors Dispersion            0.0001350040 0.0001434400 0.0001230666 7.620137e-05 7.790128e-05 4.094266e-05
+				Proportion Ancestors Dispersion 0.0127680426 0.0135658791 0.0116390608 7.206766e-03 7.367535e-03 3.872164e-03
+				Cumulative Ancestors Dispersion 0.9342053953 0.9477712744 0.9594103352 9.666171e-01 9.739846e-01 9.778568e-01
+													  Comp13       Comp14       Comp15       Comp16       Comp17       Comp18
+				Tips Dispersion                 2.227019e-04 2.043901e-04 1.739118e-04 2.408793e-04 2.629187e-04 1.271279e-04
+				Proportion Tips Dispersion      1.026352e-02 9.419592e-03 8.014959e-03 1.110125e-02 1.211696e-02 5.858862e-03
+				Cumulative Tips Dispersion      8.976704e-01 9.070899e-01 9.151049e-01 9.262062e-01 9.383231e-01 9.441820e-01
+				Ancestors Dispersion            3.700008e-05 3.123083e-05 2.604108e-05 2.957385e-05 2.442179e-05 1.607921e-05
+				Proportion Ancestors Dispersion 3.499293e-03 2.953664e-03 2.462842e-03 2.796955e-03 2.309698e-03 1.520695e-03
+				Cumulative Ancestors Dispersion 9.813561e-01 9.843098e-01 9.867726e-01 9.895696e-01 9.918793e-01 9.933999e-01
+													  Comp19       Comp20       Comp21       Comp22       Comp23       Comp24
+				Tips Dispersion                 1.052991e-04 1.417532e-04 9.708183e-05 7.981821e-05 8.567987e-05 8.613488e-05
+				Proportion Tips Dispersion      4.852850e-03 6.532887e-03 4.474147e-03 3.678529e-03 3.948672e-03 3.969641e-03
+				Cumulative Tips Dispersion      9.490348e-01 9.555677e-01 9.600419e-01 9.637204e-01 9.676691e-01 9.716387e-01
+				Ancestors Dispersion            1.300393e-05 1.110395e-05 7.341560e-06 9.653907e-06 6.237637e-06 3.853561e-06
+				Proportion Ancestors Dispersion 1.229850e-03 1.050159e-03 6.943301e-04 9.130209e-04 5.899263e-04 3.644516e-04
+				Cumulative Ancestors Dispersion 9.946298e-01 9.956800e-01 9.963743e-01 9.972873e-01 9.978772e-01 9.982417e-01
+													  Comp25       Comp26       Comp27       Comp28       Comp29       Comp30
+				Tips Dispersion                 8.085947e-05 7.703412e-05 7.414240e-05 6.427551e-05 5.382635e-05 3.566799e-05
+				Proportion Tips Dispersion      3.726517e-03 3.550221e-03 3.416952e-03 2.962223e-03 2.480659e-03 1.643807e-03
+				Cumulative Tips Dispersion      9.753652e-01 9.789154e-01 9.823324e-01 9.852946e-01 9.877753e-01 9.894191e-01
+				Ancestors Dispersion            3.928468e-06 2.740352e-06 8.567321e-07 1.130328e-06 1.477017e-06 2.157308e-06
+				Proportion Ancestors Dispersion 3.715360e-04 2.591696e-04 8.102568e-05 1.069011e-04 1.396893e-04 2.040280e-04
+				Cumulative Ancestors Dispersion 9.986132e-01 9.988724e-01 9.989534e-01 9.990603e-01 9.992000e-01 9.994040e-01
+													  Comp31       Comp32       Comp33       Comp34       Comp35       Comp36
+				Tips Dispersion                 3.178403e-05 3.018047e-05 3.463271e-05 2.023601e-05 2.158382e-05 1.982302e-05
+				Proportion Tips Dispersion      1.464809e-03 1.390907e-03 1.596095e-03 9.326036e-04 9.947192e-04 9.135706e-04
+				Cumulative Tips Dispersion      9.908839e-01 9.922748e-01 9.938709e-01 9.948035e-01 9.957982e-01 9.967118e-01
+				Ancestors Dispersion            1.220761e-06 1.475463e-06 3.075212e-07 1.093822e-06 6.291608e-07 3.159688e-07
+				Proportion Ancestors Dispersion 1.154538e-04 1.395423e-04 2.908391e-05 1.034485e-04 5.950306e-05 2.988283e-05
+				Cumulative Ancestors Dispersion 9.995195e-01 9.996590e-01 9.996881e-01 9.997916e-01 9.998511e-01 9.998810e-01
+													  Comp37       Comp38       Comp39       Comp40       Comp41       Comp42
+				Tips Dispersion                 1.354343e-05 1.279567e-05 9.646626e-06 9.263529e-06 7.707406e-06 6.727491e-06
+				Proportion Tips Dispersion      6.241672e-04 5.897055e-04 4.445777e-04 4.269222e-04 3.552061e-04 3.100454e-04
+				Cumulative Tips Dispersion      9.973360e-01 9.979257e-01 9.983702e-01 9.987972e-01 9.991524e-01 9.994624e-01
+				Ancestors Dispersion            3.644137e-07 1.758246e-07 1.477347e-07 9.765434e-08 2.204479e-07 7.931646e-08
+				Proportion Ancestors Dispersion 3.446453e-05 1.662866e-05 1.397205e-05 9.235686e-06 2.084892e-05 7.501376e-06
+				Cumulative Ancestors Dispersion 9.999154e-01 9.999320e-01 9.999460e-01 9.999553e-01 9.999761e-01 9.999836e-01
+													  Comp43       Comp44
+				Tips Dispersion                 6.152357e-06 5.512449e-06
+				Proportion Tips Dispersion      2.835396e-04 2.540486e-04
+				Cumulative Tips Dispersion      9.997460e-01 1.000000e+00
+				Ancestors Dispersion            1.064437e-07 6.693869e-08
+				Proportion Ancestors Dispersion 1.006694e-05 6.330746e-06
+				Cumulative Ancestors Dispersion 9.999937e-01 1.000000e+00
+				
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#PACA- DATA NOT ALLIGNED TO PHYLOGENETIC SIGNAL
+	#Call: PACA-NonAligned <- gm.prcomp(Superposed.Lms$coords, phy = Tree, align.to.phy = FALSE)
+	
+	#Summary
+	
+		Ordination type: Principal Component Analysis 
+		Centering by OLS mean
+		Orthogonal projection of OLS residuals
+		Number of observations: 45 
+		Number of vectors 44 
+
+		Importance of Components:
+											Comp1       Comp2       Comp3       Comp4        Comp5        Comp6        Comp7
+				Eigenvalues            0.01018836 0.002482226 0.001710781 0.001396146 0.0008309248 0.0008068646 0.0006138536
+				Proportion of Variance 0.46954431 0.114396702 0.078843641 0.064343266 0.0382942842 0.0371854358 0.0282902663
+				Cumulative Proportion  0.46954431 0.583941016 0.662784657 0.727127923 0.7654222070 0.8026076429 0.8308979092
+											  Comp8        Comp9      Comp10       Comp11       Comp12       Comp13
+				Eigenvalues            0.0005230471 0.0005004313 0.000360478 0.0003195875 0.0002695421 0.0002370289
+				Proportion of Variance 0.0241053275 0.0230630466 0.016613113 0.0147286186 0.0124222083 0.0109237958
+				Cumulative Proportion  0.8550032366 0.8780662832 0.894679396 0.9094080147 0.9218302230 0.9327540188
+											 Comp14       Comp15       Comp16       Comp17       Comp18       Comp19
+				Eigenvalues            0.0001609826 0.0001440897 0.0001345434 0.0001101075 0.0001058954 9.449891e-05
+				Proportion of Variance 0.0074190984 0.0066405683 0.0062006150 0.0050744498 0.0048803337 4.355109e-03
+				Cumulative Proportion  0.9401731172 0.9468136855 0.9530143005 0.9580887503 0.9629690840 9.673242e-01
+											 Comp20       Comp21       Comp22       Comp23       Comp24       Comp25
+				Eigenvalues            8.265091e-05 7.757916e-05 0.0000669869 0.0000596348 0.0000542178 5.168423e-05
+				Proportion of Variance 3.809078e-03 3.575340e-03 0.0030871810 0.0027483500 0.0024987003 2.381937e-03
+				Cumulative Proportion  9.711333e-01 9.747086e-01 0.9777957920 0.9805441420 0.9830428423 9.854248e-01
+											 Comp26       Comp27       Comp28       Comp29       Comp30       Comp31
+				Eigenvalues            4.359769e-05 3.869342e-05 3.651455e-05 2.998534e-05 2.786292e-05 2.269578e-05
+				Proportion of Variance 2.009258e-03 1.783238e-03 1.682822e-03 1.381915e-03 1.284100e-03 1.045966e-03
+				Cumulative Proportion  9.874340e-01 9.892173e-01 9.909001e-01 9.922820e-01 9.935661e-01 9.946121e-01
+											 Comp32       Comp33       Comp34       Comp35       Comp36       Comp37
+				Eigenvalues            1.993025e-05 1.489596e-05 1.350664e-05 1.080209e-05 9.929349e-06 9.250452e-06
+				Proportion of Variance 9.185125e-04 6.865004e-04 6.224716e-04 4.978286e-04 4.576074e-04 4.263195e-04
+				Cumulative Proportion  9.955306e-01 9.962171e-01 9.968396e-01 9.973374e-01 9.977950e-01 9.982213e-01
+											 Comp38       Comp39       Comp40       Comp41       Comp42       Comp43
+				Eigenvalues            8.442398e-06 6.504222e-06 6.345783e-06 5.269658e-06 4.482479e-06 4.029445e-06
+				Proportion of Variance 3.890793e-04 2.997558e-04 2.924539e-04 2.428593e-04 2.065810e-04 1.857024e-04
+				Cumulative Proportion  9.986104e-01 9.989102e-01 9.992026e-01 9.994455e-01 9.996520e-01 9.998378e-01
+											 Comp44
+				Eigenvalues            3.520565e-06
+				Proportion of Variance 1.622500e-04
+				Cumulative Proportion  1.000000e+00
+
+
+		Dispersion (variance) of points, after projection:
+													  Comp1       Comp2        Comp3        Comp4        Comp5        Comp6
+				Tips Dispersion                 0.010188362 0.002482226 0.0017107811 0.0013961461 0.0008309248 0.0008068646
+				Proportion Tips Dispersion      0.469544313 0.114396702 0.0788436410 0.0643432660 0.0382942842 0.0371854358
+				Cumulative Tips Dispersion      0.469544313 0.583941016 0.6627846568 0.7271279228 0.7654222070 0.8026076429
+				Ancestors Dispersion            0.006792747 0.001511668 0.0004491851 0.0003576129 0.0002022796 0.0002355843
+				Proportion Ancestors Dispersion 0.642425964 0.142966418 0.0424818115 0.0338213379 0.0191306478 0.0222804472
+				Cumulative Ancestors Dispersion 0.642425964 0.785392382 0.8278741938 0.8616955317 0.8808261795 0.9031066267
+													   Comp7        Comp8        Comp9       Comp10       Comp11       Comp12
+				Tips Dispersion                 0.0006138536 0.0005230471 0.0005004313 0.0003604780 3.195875e-04 2.695421e-04
+				Proportion Tips Dispersion      0.0282902663 0.0241053275 0.0230630466 0.0166131129 1.472862e-02 1.242221e-02
+				Cumulative Tips Dispersion      0.8308979092 0.8550032366 0.8780662832 0.8946793961 9.094080e-01 9.218302e-01
+				Ancestors Dispersion            0.0001865147 0.0001513426 0.0001290866 0.0001295288 5.672564e-05 3.934192e-05
+				Proportion Ancestors Dispersion 0.0176396770 0.0143132658 0.0122084049 0.0122502219 5.364843e-03 3.720773e-03
+				Cumulative Ancestors Dispersion 0.9207463037 0.9350595695 0.9472679744 0.9595181963 9.648830e-01 9.686038e-01
+													  Comp13       Comp14       Comp15       Comp16       Comp17       Comp18
+				Tips Dispersion                 2.370289e-04 1.609826e-04 0.0001440897 1.345434e-04 1.101075e-04 0.0001058954
+				Proportion Tips Dispersion      1.092380e-02 7.419098e-03 0.0066405683 6.200615e-03 5.074450e-03 0.0048803337
+				Cumulative Tips Dispersion      9.327540e-01 9.401731e-01 0.9468136855 9.530143e-01 9.580888e-01 0.9629690840
+				Ancestors Dispersion            4.945527e-05 3.410751e-05 0.0000327805 3.428721e-05 1.606748e-05 0.0000259736
+				Proportion Ancestors Dispersion 4.677246e-03 3.225728e-03 0.0031002247 3.242722e-03 1.519587e-03 0.0024564602
+				Cumulative Ancestors Dispersion 9.732811e-01 9.765068e-01 0.9796070109 9.828497e-01 9.843693e-01 0.9868257803
+													  Comp19       Comp20       Comp21       Comp22       Comp23       Comp24
+				Tips Dispersion                 9.449891e-05 8.265091e-05 7.757916e-05 6.698690e-05 5.963480e-05 5.421780e-05
+				Proportion Tips Dispersion      4.355109e-03 3.809078e-03 3.575340e-03 3.087181e-03 2.748350e-03 2.498700e-03
+				Cumulative Tips Dispersion      9.673242e-01 9.711333e-01 9.747086e-01 9.777958e-01 9.805441e-01 9.830428e-01
+				Ancestors Dispersion            1.476268e-05 1.838993e-05 7.693230e-06 1.509703e-05 8.241046e-06 6.707338e-06
+				Proportion Ancestors Dispersion 1.396185e-03 1.739233e-03 7.275894e-04 1.427806e-03 7.793993e-04 6.343484e-04
+				Cumulative Ancestors Dispersion 9.882220e-01 9.899612e-01 9.906888e-01 9.921166e-01 9.928960e-01 9.935303e-01
+													  Comp25       Comp26       Comp27       Comp28       Comp29       Comp30
+				Tips Dispersion                 5.168423e-05 4.359769e-05 3.869342e-05 3.651455e-05 2.998534e-05 2.786292e-05
+				Proportion Tips Dispersion      2.381937e-03 2.009258e-03 1.783238e-03 1.682822e-03 1.381915e-03 1.284100e-03
+				Cumulative Tips Dispersion      9.854248e-01 9.874340e-01 9.892173e-01 9.909001e-01 9.922820e-01 9.935661e-01
+				Ancestors Dispersion            7.332039e-06 7.858940e-06 8.773783e-06 7.260157e-06 4.338540e-06 4.348070e-06
+				Proportion Ancestors Dispersion 6.934297e-04 7.432614e-04 8.297830e-04 6.866314e-04 4.103186e-04 4.112200e-04
+				Cumulative Ancestors Dispersion 9.942238e-01 9.949670e-01 9.957968e-01 9.964834e-01 9.968938e-01 9.973050e-01
+													  Comp31       Comp32       Comp33       Comp34       Comp35       Comp36
+				Tips Dispersion                 2.269578e-05 1.993025e-05 1.489596e-05 1.350664e-05 1.080209e-05 9.929349e-06
+				Proportion Tips Dispersion      1.045966e-03 9.185125e-04 6.865004e-04 6.224716e-04 4.978286e-04 4.576074e-04
+				Cumulative Tips Dispersion      9.946121e-01 9.955306e-01 9.962171e-01 9.968396e-01 9.973374e-01 9.977950e-01
+				Ancestors Dispersion            4.997785e-06 4.866400e-06 3.480009e-06 2.748207e-06 1.802384e-06 1.696327e-06
+				Proportion Ancestors Dispersion 4.726669e-04 4.602412e-04 3.291229e-04 2.599124e-04 1.704609e-04 1.604306e-04
+				Cumulative Ancestors Dispersion 9.977777e-01 9.982379e-01 9.985670e-01 9.988269e-01 9.989974e-01 9.991578e-01
+													  Comp37       Comp38       Comp39       Comp40       Comp41       Comp42
+				Tips Dispersion                 9.250452e-06 8.442398e-06 6.504222e-06 6.345783e-06 5.269658e-06 4.482479e-06
+				Proportion Tips Dispersion      4.263195e-04 3.890793e-04 2.997558e-04 2.924539e-04 2.428593e-04 2.065810e-04
+				Cumulative Tips Dispersion      9.982213e-01 9.986104e-01 9.989102e-01 9.992026e-01 9.994455e-01 9.996520e-01
+				Ancestors Dispersion            1.378901e-06 2.021088e-06 9.021670e-07 7.839075e-07 1.225363e-06 9.408710e-07
+				Proportion Ancestors Dispersion 1.304100e-04 1.911450e-04 8.532269e-05 7.413827e-05 1.158890e-04 8.898314e-05
+				Cumulative Ancestors Dispersion 9.992882e-01 9.994794e-01 9.995647e-01 9.996388e-01 9.997547e-01 9.998437e-01
+													  Comp43       Comp44
+				Tips Dispersion                 4.029445e-06 3.520565e-06
+				Proportion Tips Dispersion      1.857024e-04 1.622500e-04
+				Cumulative Tips Dispersion      9.998378e-01 1.000000e+00
+				Ancestors Dispersion            9.963430e-07 6.562209e-07
+				Proportion Ancestors Dispersion 9.422942e-05 6.206227e-05
+				Cumulative Ancestors Dispersion 9.999379e-01 1.000000e+00
+				
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
