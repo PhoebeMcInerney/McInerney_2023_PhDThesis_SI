@@ -551,23 +551,26 @@ CentroidSize <- list()
 
   CentroidSize[[ 1 ]] <- summary( procD.pgls(f1=Centroid.size.L ~ Flight * Family, phy = phy, data = NonDromgdf, iter = 1000, SS.type = "II") )   
   CentroidSize[[ 2 ]] <- summary( procD.pgls(f1=Centroid.size.L ~ Body.Mass.log , phy = phy, data = gdf, iter = 1000, SS.type = "I") )
-  CentroidSize[[ 3 ]] <- summary( procD.pgls(f1=Centroid.size.L ~ Flight * Body.Mass.log , phy = phy, data = gdf, iter = 1000, SS.type = "II") )
+  CentroidSize[[ 3 ]] <- summary( procD.pgls(f1=Centroid.size.L ~ Family * Body.Mass.log , phy = phy, data = gdf, iter = 1000, SS.type = "II") )
   CentroidSize[[ 4 ]] <- summary( procD.pgls(f1=Centroid.size.L ~ Skull.AspectRatio.log , phy = phy, data = gdf, iter = 1000, SS.type = "II") ) 
   CentroidSize[[ 5 ]] <- summary( procD.pgls(f1=Centroid.size.L ~ PostRostral.Cranium.length , phy = phy, data = gdf, iter = 1000, SS.type = "I") ) 
   CentroidSize[[ 6 ]] <- summary( procD.pgls(f1=Centroid.size.L ~ Endosurface.log , phy = phy, data = BrainNAgdf, iter = 1000, SS.type = "I") )
-  CentroidSize[[ 7 ]] <- summary( procD.pgls(f1=Centroid.size.L ~ Body.Mass.log * PostRostral.Cranium.length , phy = phy, data = gdf, iter = 1000, SS.type = "II") )
-
+  CentroidSize[[ 7 ]] <- summary( procD.pgls(f1=Centroid.size.L ~ Body.Mass.log * Endosurface.log , phy = phy, data = gdf, iter = 1000, SS.type = "I") )
+  CentroidSize[[ 8 ]] <- summary( procD.pgls(f1=Centroid.size.L ~ Body.Mass.log * PostRostral.Cranium.length , phy = phy, data = gdf, iter = 1000, SS.type = "II") )
+  CentroidSize[[ 9 ]] <- summary( procD.pgls(f1=Centroid.size.L ~ Family, phy = phy, data = gdf, iter = 1000, SS.type = "I") )
+  CentroidSize[[ 10 ]] <- summary( procD.pgls(f1=Centroid.size.L ~ Diet, phy = phy, data = Anseriformgdf, iter = 1000, SS.type = "I") )
+  
 InnerEarShape <- list()
    
-  InnerEarShape[[ 1 ]] <- summary(procD.pgls(f1=shape ~ Centroid.size.L * Body.Mass.log, phy = phy , data = gdf , SS.type = "I", iter = 1000))
-  InnerEarShape[[ 2 ]] <- summary(procD.pgls(f1=shape ~ Endosurface.log , phy = phy , data = BrainNAgdf , SS.type = "I", iter = 1000))
+  InnerEarShape[[ 1 ]] <- summary(procD.pgls(f1=shape ~ Centroid.size.L* Body.Mass.log, phy = phy , data = gdf , SS.type = "I", iter = 1000)) #Change Centroid.size.L to Centroid.size.dis to check discrete
+  InnerEarShape[[ 2 ]] <- summary(procD.pgls(f1=shape ~ Endosurface.log , phy = phy , data = BrainNAgdf , SS.type = "I", iter = 1000)) 
   InnerEarShape[[ 3 ]] <- summary(procD.pgls(f1=shape ~ Centroid.size.L * Family , phy = phy, data = gdf, SS.type = "I", iter = 1000))
-  InnerEarShape[[ 4 ]] <- summary(procD.pgls(f1=shape ~ Body.Mass.dis + Flight + Family , phy = phy, data = gdf, SS.type = "II", iter = 1000))   
-  InnerEarShape[[ 5 ]] <- summary(procD.pgls(f1=shape ~ Diet, phy = phy, data = NonDromgdf, SS.type = "I", iter = 1000))    
+  InnerEarShape[[ 4 ]] <- summary(procD.pgls(f1=shape ~ Flight + Family , phy = phy, data = gdf, SS.type = "I", iter = 1000)) #This is tested as SS.type I and II  
+  InnerEarShape[[ 5 ]] <- summary(procD.pgls(f1=shape ~ Diet, phy = phy, data = NonDromgdf, SS.type = "I", iter = 1000)) #Change the data to Anseriformgdf to test only within Anseriformes
   InnerEarShape[[ 6 ]] <- summary(procD.pgls(f1=shape ~ Skull.AspectRatio.log , phy = phy, data = BrainNAgdf, SS.type = "I", iter = 1000))
   InnerEarShape[[ 7 ]] <- summary(procD.pgls(f1=shape ~ PostRostral.Cranium.length * Centroid.size.L, phy = phy, data = gdf, SS.type = "I", iter = 1000))
   InnerEarShape[[ 8 ]] <- summary(procD.pgls(f1=shape ~ PostRostral.Cranium.Dis  * Centroid.size.L, phy = phy, data = gdf, SS.type = "I", iter = 1000))
-  InnerEarShape[[ 9 ]] <- summary(procD.pgls(f1=shape ~ CC.Width.log.dis * CC.Height.log.dis , phy = phy, data = gdf, SS.type = "II", iter = 1000))
+  InnerEarShape[[ 9 ]] <- summary(procD.pgls(f1=shape ~ CC.Width.log * CC.Height.log , phy = phy, data = gdf, SS.type = "II", iter = 1000))
   InnerEarShape[[ 10 ]] <- summary(procD.pgls(f1=shape ~ Skull.AspectRatio.log * Endosurface.log, phy = phy, data = BrainNAgdf, SS.type = "I", iter = 1000)) 
   InnerEarShape[[ 11 ]] <- summary(procD.pgls(f1=shape ~ RelativeCsize, phy = phy, data = BrainNAgdf, SS.type = "I", iter = 1000)) 
   
